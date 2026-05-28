@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NULLGRIDS | Cybersecurity Ecosystem</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Using Rajdhani for the tactical/technical feel, Inter for readability -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Pinned version for security) -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- Tailwind CSS CDN (Pinned version for security) -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.3"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        custom: {
+                            // Deep Dark Purple Theme
+                            bg: '#0D0518',
+                            surface: '#1A0B2E',
+                            surfaceHover: '#251042',
+                            primary: '#A855F7', // Purple 500
+                            primaryGlow: '#D8B4FE', // Purple 300
+                            white: '#FFFFFF',
+                            gray: '#A1A1AA' // Zinc 400
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-purple': "url(\"data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M0 39.5h40v1H0zM39.5 0v40h1V0z' fill='rgba(168, 85, 247, 0.05)'/%3E%3C/svg%3E\")",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0D0518;
+            color: #FFFFFF;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0D0518; }
+        ::-webkit-scrollbar-thumb { background: #251042; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A855F7; }
+
+        /* Glass / Surface panels */
+        .glass-panel {
+            background: rgba(26, 11, 46, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            transition: all 0.3s ease;
+        }
+        .glass-panel:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+        }
+
+        /* Nav Glass Effect */
+        .nav-scrolled {
+            background-color: rgba(13, 5, 24, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        /* Purple Glows */
+        .text-glow {
+            text-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+        }
+        .box-glow {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Background Grid Animation */
+        .bg-grid-animated {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(40px); }
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+
+        /* Cyber Borders (Adapted for Purple) */
+        .cyber-border {
+            position: relative;
+        }
+        .cyber-border::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            clip-path: polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .group:hover .cyber-border::before {
+            border-color: rgba(168, 85, 247, 0.8);
+            box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-custom-primary selection:text-white relative">
+
+    <!-- Global Background Elements -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="bg-grid-animated"></div>
+        <div class="absolute top-[-20%] left-[20%] w-[800px] h-[800px] bg-custom-primary/10 rounded-full blur-[150px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="logo.jpeg" alt="NULLGRIDS Labs Logo" class="w-10 h-10 object-contain"/>
+                <span class="font-tech text-2xl font-bold tracking-widest text-white group-hover:text-custom-primaryGlow transition-colors">NULLGRIDS</span>
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-8 text-sm font-tech tracking-wide text-custom-gray">
+                <a href="#about" class="hover:text-custom-primary transition-colors uppercase">About</a>
+                <a href="#initiatives" class="hover:text-custom-primary transition-colors uppercase">Initiatives</a>
+                <a href="#operation-black-cipher" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph-fill ph-target text-custom-primary"></i> NCWC '26</a>
+                <a href="#services" class="hover:text-custom-primary transition-colors uppercase">Services</a>
+                <a href="#contact" class="px-5 py-2 bg-custom-primary/10 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all uppercase shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">Join Ecosystem</a>
+            </div>
+            
+            <button class="lg:hidden text-2xl text-custom-primary">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 pb-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+    <img src="assets/hero.png" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover -z-10 opacity-30"/>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded border border-custom-primary/30 bg-custom-primary/10 text-custom-primaryGlow text-xs font-tech tracking-widest uppercase mb-8 reveal">
+                <span class="w-2 h-2 rounded-full bg-custom-primary animate-pulse"></span>
+                Cybersecurity Infrastructure & Skill Ecosystem for Education
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-tech font-bold tracking-tight mb-6 reveal delay-100 text-white">
+                BUILDING THE <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-custom-primary to-purple-400 text-glow">FUTURE CYBERSECURITY</span><br/>
+                ECOSYSTEM
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-custom-gray text-lg md:text-xl mb-10 reveal delay-200">
+                A student-led initiative focused on practical learning, cyber infrastructure, awareness, and operational cybersecurity experiences. Bridging the gap between theory and tactical execution.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal delay-200">
+                <a href="#initiatives" class="w-full sm:w-auto px-8 py-4 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors cyber-border relative group shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                    <span class="relative z-10 flex items-center justify-center gap-2">Explore NULLGRIDS <i class="ph ph-arrow-right"></i></span>
+                </a>
+                <a href="#operation-black-cipher" class="w-full sm:w-auto px-8 py-4 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center justify-center gap-2">
+                    <i class="ph ph-crosshair"></i> View Operations
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. ABOUT NULLGRIDS -->
+    <section id="about" class="py-24 relative z-10 border-t border-custom-primary/20 bg-custom-surface/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">01 // Identity</h2>
+                    <h3 class="text-4xl md:text-5xl font-tech font-bold mb-6 text-white">MORE THAN JUST <br><span class="text-custom-primary">A COURSE PLATFORM</span></h3>
+                    <p class="text-custom-gray mb-6 text-lg">
+                        NULLGRIDS is an advanced, student-led cybersecurity initiative. We are not just another workshop host or basic training center; we are building a comprehensive technical ecosystem.
+                    </p>
+                    <p class="text-custom-gray mb-8 text-lg">
+                        Our vision integrates practical cybersecurity learning, institutional cyber awareness, technical ecosystem development, and real-world operational exposure to forge the next generation of defenders.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="border-l-2 border-custom-primary pl-4 bg-gradient-to-r from-custom-primary/5 to-transparent py-2">
+                            <h4 class="font-tech text-xl text-white mb-2">Our Mission</h4>
+                            <p class="text-sm text-custom-gray">To provide accessible, high-grade operational cyber experiences and infrastructure to students worldwide.</p>
+                        </div>
+                        <div class="border-l-2 border-custom-primary pl-4 bg-gradient-to-r from-custom-primary/5 to-transparent py-2">
+                            <h4 class="font-tech text-xl text-white mb-2">Our Philosophy</h4>
+                            <p class="text-sm text-custom-gray">Defense through practical application, tactical ecosystem building, and professional maturity.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative reveal delay-200 h-[400px] border border-custom-primary/30 glass-panel flex items-center justify-center overflow-hidden group shadow-[0_0_30px_rgba(168,85,247,0.1)]">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity mix-blend-luminosity filter hue-rotate-270 saturate-200"></div>
+                    <div class="relative z-10 text-center">
+                        <i class="ph-thin ph-graph text-7xl text-custom-primary mb-4 opacity-80"></i>
+                        <p class="font-tech tracking-widest text-custom-primaryGlow text-sm">ECOSYSTEM VISUALIZATION</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. CURRENT INITIATIVES -->
+    <section id="initiatives" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">02 // Active Operations</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">CURRENT INITIATIVES</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Initiative 1 -->
+                <div class="glass-panel p-8 group reveal cyber-border">
+                    <div class="text-xs font-tech text-red-400 tracking-widest mb-4 flex items-center gap-2 bg-red-400/10 inline-flex px-2 py-1 rounded border border-red-400/20">
+                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_5px_#ef4444]"></span> ACTIVE // PRIORITY
+                    </div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Operation BLACK CIPHER</h4>
+                    <p class="text-sm text-custom-gray mb-4">The National Cyber Warfare Championship. A narrative-driven attack-defense CTF environment simulating real-world threat scenarios.</p>
+                    <div class="text-xs text-custom-primaryGlow font-tech">OBJ: Tactical evaluation & simulation</div>
+                </div>
+
+                <!-- Initiative 2 -->
+                <div class="glass-panel p-8 group reveal delay-100 cyber-border">
+                    <div class="text-xs font-tech text-green-400 tracking-widest mb-4 flex items-center gap-2 bg-green-400/10 inline-flex px-2 py-1 rounded border border-green-400/20">
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_5px_#22c55e]"></span> OPERATIONAL
+                    </div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Cybersecurity Bootcamps</h4>
+                    <p class="text-sm text-custom-gray mb-4">Intensive, structured technical training sessions covering foundational and advanced defensive/offensive paradigms.</p>
+                    <div class="text-xs text-custom-primaryGlow font-tech">OBJ: Technical skill ecosystem scaling</div>
+                </div>
+
+                <!-- Initiative 3 -->
+                <div class="glass-panel p-8 group reveal delay-200 cyber-border">
+                    <div class="text-xs font-tech text-green-400 tracking-widest mb-4 flex items-center gap-2 bg-green-400/10 inline-flex px-2 py-1 rounded border border-green-400/20">
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_5px_#22c55e]"></span> OPERATIONAL
+                    </div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">School Cyber Awareness</h4>
+                    <p class="text-sm text-custom-gray mb-4">Institution-friendly digital safety programs designed to educate younger demographics on ethical and safe digital practices.</p>
+                    <div class="text-xs text-custom-primaryGlow font-tech">OBJ: Foundational awareness</div>
+                </div>
+
+                <!-- Initiative 4 -->
+                <div class="glass-panel p-8 group reveal cyber-border">
+                    <div class="text-xs font-tech text-yellow-400 tracking-widest mb-4 flex items-center gap-2 bg-yellow-400/10 inline-flex px-2 py-1 rounded border border-yellow-400/20">
+                        <span class="w-1.5 h-1.5 bg-yellow-500 rounded-full shadow-[0_0_5px_#eab308]"></span> SCALING
+                    </div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Community Building</h4>
+                    <p class="text-sm text-custom-gray mb-4">Fostering a network of contributors, professionals, and students to collaborate, share threat intel, and grow together.</p>
+                    <div class="text-xs text-custom-primaryGlow font-tech">EXPANSION: National chapter integration</div>
+                </div>
+
+                <!-- Initiative 5 -->
+                <div class="glass-panel p-8 group reveal delay-100 cyber-border md:col-span-2 lg:col-span-2">
+                    <div class="text-xs font-tech text-blue-400 tracking-widest mb-4 flex items-center gap-2 bg-blue-400/10 inline-flex px-2 py-1 rounded border border-blue-400/20">
+                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full shadow-[0_0_5px_#3b82f6]"></span> IN DEVELOPMENT
+                    </div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Cyber Infrastructure & Lab Development</h4>
+                    <p class="text-sm text-custom-gray mb-4">Architecting scalable, cloud-based cyber ranges and isolated network environments. Providing students with secure sandboxes for malware analysis, penetration testing simulation, and SOC operations without requiring local hardware.</p>
+                    <div class="text-xs text-custom-primaryGlow font-tech">OBJ: Ecosystem independence & capability hosting</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. OPERATION BLACK CIPHER -->
+    <section id="operation-black-cipher" class="py-24 relative z-10 bg-[#150724] overflow-hidden border-y border-custom-primary/30">
+        <!-- Dramatic Background -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-custom-primary/10 via-[#150724] to-[#150724]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="w-full lg:w-1/2 reveal">
+                    <div class="inline-block border border-custom-primary/50 bg-custom-primary/10 text-custom-primary px-4 py-1 text-sm font-tech tracking-widest mb-6 shadow-[0_0_10px_rgba(168,85,247,0.2)]">
+                        CLASSIFIED SIMULATION // 2026
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-tech font-bold mb-2 text-white">NATIONAL CYBER WARFARE CHAMPIONSHIP</h2>
+                    <h3 class="text-2xl md:text-3xl text-custom-primaryGlow font-tech font-bold tracking-widest mb-6">OPERATION BLACK CIPHER</h3>
+                    
+                    <p class="text-custom-gray mb-8 text-lg">
+                        Not a standard CTF. An AI-augmented, narrative-driven attack-defense environment simulating nation-state level cyber warfare, designed to push participants to their operational limits.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="border-l-2 border-custom-primary pl-4 py-1 bg-gradient-to-r from-custom-primary/5 to-transparent">
+                            <div class="text-white font-tech text-lg">Attack-Defense</div>
+                            <div class="text-xs text-custom-primaryGlow">Live Infrastructure</div>
+                        </div>
+                        <div class="border-l-2 border-custom-primary pl-4 py-1 bg-gradient-to-r from-custom-primary/5 to-transparent">
+                            <div class="text-white font-tech text-lg">AI-Augmented</div>
+                            <div class="text-xs text-custom-primaryGlow">Adaptive Adversaries</div>
+                        </div>
+                        <div class="border-l-2 border-custom-primary pl-4 py-1 bg-gradient-to-r from-custom-primary/5 to-transparent">
+                            <div class="text-white font-tech text-lg">Narrative CTF</div>
+                            <div class="text-xs text-custom-primaryGlow">Intel-driven scenarios</div>
+                        </div>
+                        <div class="border-l-2 border-custom-primary pl-4 py-1 bg-gradient-to-r from-custom-primary/5 to-transparent">
+                            <div class="text-white font-tech text-lg">Threat Intel</div>
+                            <div class="text-xs text-custom-primaryGlow">Real-world TTPs</div>
+                        </div>
+                    </div>
+
+                    <a href="#" class="inline-flex items-center gap-2 text-white hover:text-custom-primary font-tech tracking-widest transition-colors uppercase border-b border-custom-primary pb-1">
+                        ACCESS INTEL BRIEFING <i class="ph-bold ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="w-full lg:w-1/2 reveal delay-200">
+                    <div class="glass-panel p-8 cyber-border bg-[#0D0518]/80">
+                        <div class="text-sm font-tech text-custom-primary tracking-widest mb-6 border-b border-custom-primary/30 pb-2">SIMULATION TIMELINE</div>
+                        
+                        <div class="relative border-l border-custom-primary/30 ml-3 space-y-8">
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[5px] top-1 w-2.5 h-2.5 bg-custom-primary rounded-full shadow-[0_0_10px_rgba(168,85,247,0.8)]"></div>
+                                <h4 class="text-white font-tech text-xl">DAY 1: INITIAL COMPROMISE</h4>
+                                <p class="text-sm text-custom-gray mt-1">Teams map the environment, establish persistence, and face automated Red Team injects. Focus on reconnaissance and defensive posture.</p>
+                            </div>
+                            <div class="relative pl-6">
+                                <div class="absolute -left-[5px] top-1 w-2.5 h-2.5 border-2 border-custom-primary bg-[#0D0518] rounded-full"></div>
+                                <h4 class="text-white font-tech text-xl">DAY 2: TOTAL WARFARE</h4>
+                                <p class="text-sm text-custom-gray mt-1">SLA enforcement begins. Teams must patch vulnerabilities while maintaining service uptime amidst active AI and human-led exploitation.</p>
+                            </div>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-custom-primary/30">
+                            <div class="text-center">
+                                <div class="text-4xl font-tech font-bold text-white text-glow">50</div>
+                                <div class="text-[10px] text-custom-primaryGlow tracking-widest mt-1">TEAMS</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-tech font-bold text-white text-glow">24</div>
+                                <div class="text-[10px] text-custom-primaryGlow tracking-widest mt-1">HOURS</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-tech font-bold text-white text-glow">100+</div>
+                                <div class="text-[10px] text-custom-primaryGlow tracking-widest mt-1">NODES</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. ECOSYSTEM STRUCTURE -->
+    <section class="py-24 relative z-10 bg-custom-bg border-b border-custom-primary/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">03 // Organization</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">ECOSYSTEM STRUCTURE</h3>
+                <p class="text-custom-gray mt-4 max-w-2xl mx-auto">A professionally modeled operational hierarchy ensuring efficient execution, technical excellence, and scalable growth.</p>
+            </div>
+
+            <!-- Org Chart Layout -->
+            <div class="flex flex-col items-center reveal">
+                <!-- Top Node -->
+                <div class="glass-panel px-10 py-5 text-center border-t-2 border-t-custom-primary mb-8 z-10 cyber-border group bg-custom-surface">
+                    <h4 class="text-xl font-tech font-bold text-white">CORE MANAGEMENT</h4>
+                    <p class="text-xs text-custom-primaryGlow">Strategic Direction & Leadership</p>
+                </div>
+
+                <!-- Connectors -->
+                <div class="w-full max-w-4xl h-[1px] bg-custom-primary/40 relative mb-8">
+                    <div class="absolute left-1/2 top-[-32px] w-[1px] h-[32px] bg-custom-primary/40"></div>
+                    <div class="absolute left-[10%] top-0 w-[1px] h-[32px] bg-custom-primary/40"></div>
+                    <div class="absolute left-[30%] top-0 w-[1px] h-[32px] bg-custom-primary/40"></div>
+                    <div class="absolute left-[50%] top-0 w-[1px] h-[32px] bg-custom-primary/40"></div>
+                    <div class="absolute left-[70%] top-0 w-[1px] h-[32px] bg-custom-primary/40"></div>
+                    <div class="absolute left-[90%] top-0 w-[1px] h-[32px] bg-custom-primary/40"></div>
+                </div>
+
+                <!-- Divisions -->
+                <div class="w-full max-w-5xl grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="glass-panel p-4 text-center border-t border-t-custom-primary/30 hover:border-t-custom-primary transition-colors bg-custom-surface">
+                        <i class="ph ph-code text-2xl text-custom-primary mb-2"></i>
+                        <h5 class="font-tech font-bold text-white text-sm">Technical</h5>
+                        <p class="text-[10px] text-custom-gray mt-1">Infrastructure & Dev</p>
+                    </div>
+                    <div class="glass-panel p-4 text-center border-t border-t-custom-primary/30 hover:border-t-custom-primary transition-colors bg-custom-surface">
+                        <i class="ph ph-broadcast text-2xl text-custom-primary mb-2"></i>
+                        <h5 class="font-tech font-bold text-white text-sm">Outreach</h5>
+                        <p class="text-[10px] text-custom-gray mt-1">Community & Schools</p>
+                    </div>
+                    <div class="glass-panel p-4 text-center border-t border-t-custom-primary/30 hover:border-t-custom-primary transition-colors bg-custom-surface">
+                        <i class="ph ph-activity text-2xl text-custom-primary mb-2"></i>
+                        <h5 class="font-tech font-bold text-white text-sm">Operations</h5>
+                        <p class="text-[10px] text-custom-gray mt-1">Events & Logistics</p>
+                    </div>
+                    <div class="glass-panel p-4 text-center border-t border-t-custom-primary/30 hover:border-t-custom-primary transition-colors bg-custom-surface">
+                        <i class="ph ph-pen-nib text-2xl text-custom-primary mb-2"></i>
+                        <h5 class="font-tech font-bold text-white text-sm">Design & Media</h5>
+                        <p class="text-[10px] text-custom-gray mt-1">Branding & UI/UX</p>
+                    </div>
+                    <div class="glass-panel p-4 text-center border-t border-t-custom-primary/30 hover:border-t-custom-primary transition-colors bg-custom-surface col-span-2 md:col-span-1">
+                        <i class="ph ph-handshake text-2xl text-custom-primary mb-2"></i>
+                        <h5 class="font-tech font-bold text-white text-sm">Sponsorship</h5>
+                        <p class="text-[10px] text-custom-gray mt-1">Partnerships</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE MANAGEMENT TEAM -->
+    <section class="py-24 relative z-10 border-b border-custom-primary/20 bg-custom-surface/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">Leadership // Core Team</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">CORE MANAGEMENT</h3>
+                <p class="text-custom-gray mt-4 max-w-2xl mx-auto">The strategic and operational leads driving the NULLGRIDS ecosystem.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- 1 -->
+                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Founder & Director</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Syed Raihaan S</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Vision & Strategic Direction</li>
+                        <li><span class="text-custom-primary">></span> Institutional Relations</li>
+                        <li><span class="text-custom-primary">></span> Ecosystem Development</li>
+                        <li><span class="text-custom-primary">></span> Event Leadership</li>
+                        <li><span class="text-custom-primary">></span> Operations Oversight</li>
+                        <li><span class="text-custom-primary">></span> Partnership Coordination</li>
+                    </ul>
+                </div>
+                
+                <!-- 2 -->
+                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Core Operations & Coordination</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">HariShakthi</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Internal Team Coordination</li>
+                        <li><span class="text-custom-primary">></span> Operational Planning</li>
+                        <li><span class="text-custom-primary">></span> Execution Monitoring</li>
+                        <li><span class="text-custom-primary">></span> Contributor Management</li>
+                        <li><span class="text-custom-primary">></span> Timeline Supervision</li>
+                    </ul>
+                </div>
+
+                <!-- 3 -->
+                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Technical Operations Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Arumugapandi</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Cyber Range Infrastructure</li>
+                        <li><span class="text-custom-primary">></span> Technical Deployment</li>
+                        <li><span class="text-custom-primary">></span> Event Systems</li>
+                        <li><span class="text-custom-primary">></span> Platform Operations</li>
+                        <li><span class="text-custom-primary">></span> Infrastructure Coordination</li>
+                    </ul>
+                </div>
+
+                <!-- 4 -->
+                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Outreach & Partnership Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Harishakthi</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> School & College Outreach</li>
+                        <li><span class="text-custom-primary">></span> External Communications</li>
+                        <li><span class="text-custom-primary">></span> Sponsorship Coordination</li>
+                        <li><span class="text-custom-primary">></span> Partnership Development</li>
+                        <li><span class="text-custom-primary">></span> Institutional Networking</li>
+                    </ul>
+                </div>
+
+                <!-- 5 -->
+                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Design, Branding & Media Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">SanthaKumar</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Brand Identity</li>
+                        <li><span class="text-custom-primary">></span> Event Media</li>
+                        <li><span class="text-custom-primary">></span> Creative Direction</li>
+                        <li><span class="text-custom-primary">></span> Public Visual Presence</li>
+                        <li><span class="text-custom-primary">></span> Social Media Coordination</li>
+                    </ul>
+                </div>
+
+                <!-- 6 -->
+                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Finance & Documentation Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Shiek nifla</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Budget Planning</li>
+                        <li><span class="text-custom-primary">></span> Expense Tracking</li>
+                        <li><span class="text-custom-primary">></span> Documentation Management</li>
+                        <li><span class="text-custom-primary">></span> Financial Coordination</li>
+                        <li><span class="text-custom-primary">></span> Proposal & Reporting Support</li>
+                    </ul>
+                </div>
+
+                <!-- 7 -->
+                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Registration & Participant Relations</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Priyan and sashvini</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Registration Systems</li>
+                        <li><span class="text-custom-primary">></span> Participant Communication</li>
+                        <li><span class="text-custom-primary">></span> Help Desk Coordination</li>
+                        <li><span class="text-custom-primary">></span> Event Participant Support</li>
+                        <li><span class="text-custom-primary">></span> Verification Management</li>
+                    </ul>
+                </div>
+
+                <!-- 8 -->
+                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Operations & Logistics Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">harisakthi</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Venue Coordination</li>
+                        <li><span class="text-custom-primary">></span> Operational Readiness</li>
+                        <li><span class="text-custom-primary">></span> Infrastructure Logistics</li>
+                        <li><span class="text-custom-primary">></span> Event-Day Operations</li>
+                        <li><span class="text-custom-primary">></span> Resource Coordination</li>
+                    </ul>
+                </div>
+
+                <!-- 9 -->
+                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Volunteer & Workforce Coord.</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Syed raihaan</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Volunteer Management</li>
+                        <li><span class="text-custom-primary">></span> Workforce Allocation</li>
+                        <li><span class="text-custom-primary">></span> Team Coordination</li>
+                        <li><span class="text-custom-primary">></span> Internal Operational Support</li>
+                    </ul>
+                </div>
+
+                <!-- 10 -->
+                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Testing & Validation Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Sheik nifla</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">></span> Challenge Validation</li>
+                        <li><span class="text-custom-primary">></span> Infrastructure Testing</li>
+                        <li><span class="text-custom-primary">></span> Technical Quality Assurance</li>
+                        <li><span class="text-custom-primary">></span> Operational Readiness Verif.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CAPABILITY MATRIX -->
+    <section class="py-24 relative z-10 bg-custom-surface/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 reveal flex flex-col md:flex-row justify-between items-end">
+                <div>
+                    <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">04 // Capability Matrix</h2>
+                    <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">TECHNICAL DOMAINS</h3>
+                </div>
+                <div class="text-custom-primaryGlow font-tech text-sm hidden md:block border border-custom-primary/30 px-3 py-1 rounded bg-custom-primary/10">
+                    OPERATIONAL CAPABILITIES // V1.0
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel p-6 border-l-2 border-l-custom-primary group reveal hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-radar text-4xl text-custom-primary mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">SOC Operations</h4>
+                    <p class="text-sm text-custom-gray">Log analysis, SIEM deployment, and continuous network monitoring.</p>
+                </div>
+                <div class="glass-panel p-6 border-l-2 border-l-purple-400 group reveal delay-100 hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-magnifying-glass text-4xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">DFIR</h4>
+                    <p class="text-sm text-custom-gray">Digital Forensics & Incident Response. Memory analysis and artifact recovery.</p>
+                </div>
+                <div class="glass-panel p-6 border-l-2 border-l-pink-500 group reveal delay-200 hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-skull text-4xl text-pink-500 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">Red Teaming</h4>
+                    <p class="text-sm text-custom-gray">Adversary simulation, advanced persistent threat modeling, and exploitation.</p>
+                </div>
+                <div class="glass-panel p-6 border-l-2 border-l-indigo-400 group reveal delay-100 hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-file-text text-4xl text-indigo-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">GRC</h4>
+                    <p class="text-sm text-custom-gray">Governance, Risk, and Compliance. Policy framework structuring.</p>
+                </div>
+                <div class="glass-panel p-6 border-l-2 border-l-purple-300 group reveal hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-bug-beetle text-4xl text-purple-300 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">Threat Intelligence</h4>
+                    <p class="text-sm text-custom-gray">OSINT, dark web monitoring, and IoC gathering & distribution.</p>
+                </div>
+                <div class="glass-panel p-6 border-l-2 border-l-custom-primaryGlow group reveal delay-100 hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-shield-check text-4xl text-custom-primaryGlow mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">Cyber Awareness</h4>
+                    <p class="text-sm text-custom-gray">Human firewall development, social engineering defense, and safety protocols.</p>
+                </div>
+                <div class="glass-panel p-6 border-l-2 border-l-white group reveal delay-200 lg:col-span-2 hover:bg-custom-surfaceHover">
+                    <i class="ph-light ph-brain text-4xl text-white mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-tech font-bold text-xl text-white mb-2">AI-Augmented Security</h4>
+                    <p class="text-sm text-custom-gray">Leveraging machine learning for anomaly detection, automated triage, and intelligent orchestration within security operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. ACADEMIC INTEGRATION -->
+    <section id="services" class="py-24 relative z-10 border-y border-custom-primary/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="order-2 lg:order-1 reveal relative h-[500px] border border-custom-primary/30 glass-panel rounded overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.1)]">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center opacity-20 mix-blend-luminosity filter hue-rotate-270 saturate-150"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-custom-bg via-transparent to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 p-4 bg-custom-surface/80 backdrop-blur border border-custom-primary/30 rounded">
+                        <h5 class="font-tech text-white text-lg font-bold">Institution Partnership Program</h5>
+                        <p class="text-xs text-custom-primaryGlow">Building secure foundations for educational organizations.</p>
+                    </div>
+                </div>
+
+                <div class="order-1 lg:order-2 reveal delay-100">
+                    <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">05 // Academic Integration</h2>
+                    <h3 class="text-4xl md:text-5xl font-tech font-bold mb-6 text-white">INSTITUTIONAL SERVICES</h3>
+                    <p class="text-custom-gray mb-8 text-lg">
+                        We provide professional, ethically-grounded cybersecurity education tailored for schools and academic institutions. Our focus is on defense, safety, and career pathways—building the human firewall of tomorrow.
+                    </p>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-4 p-4 border border-custom-primary/20 bg-custom-surface/50 rounded hover:border-custom-primary/50 transition-colors">
+                            <i class="ph-fill ph-check-circle text-custom-primary text-xl mt-1 text-glow"></i>
+                            <div>
+                                <strong class="block text-white font-tech tracking-wide text-lg">Cyber Awareness Sessions</strong>
+                                <span class="text-sm text-custom-gray">Age-appropriate digital safety and hygiene programs.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4 p-4 border border-custom-primary/20 bg-custom-surface/50 rounded hover:border-custom-primary/50 transition-colors">
+                            <i class="ph-fill ph-check-circle text-custom-primary text-xl mt-1 text-glow"></i>
+                            <div>
+                                <strong class="block text-white font-tech tracking-wide text-lg">Practical Exposure Labs</strong>
+                                <span class="text-sm text-custom-gray">Safe, guided environments for understanding defensive concepts.</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4 p-4 border border-custom-primary/20 bg-custom-surface/50 rounded hover:border-custom-primary/50 transition-colors">
+                            <i class="ph-fill ph-check-circle text-custom-primary text-xl mt-1 text-glow"></i>
+                            <div>
+                                <strong class="block text-white font-tech tracking-wide text-lg">Future Career Guidance</strong>
+                                <span class="text-sm text-custom-gray">Mapping pathways into the professional cybersecurity industry.</span>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="text-sm text-custom-gray border-l-2 border-custom-primary/50 pl-4 italic">
+                        *Note: NULLGRIDS maintains a strict educational and defensive focus. We do not provide offensive exploitation training ("hacking schools") to unvetted school demographics.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. ROADMAP -->
+    <section class="py-24 relative z-10 bg-custom-surface/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">06 // Strategic Vision</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">DEVELOPMENT ROADMAP</h3>
+            </div>
+
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Vertical Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-custom-primary/30 -translate-x-1/2"></div>
+                
+                <div class="space-y-12">
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-custom-primary -translate-x-1/2 shadow-[0_0_15px_rgba(168,85,247,0.8)] border-2 border-custom-bg z-10"></div>
+                        <div class="ml-12 md:ml-0 md:w-1/2 md:px-8 text-left md:group-odd:text-right">
+                            <div class="text-xs font-tech text-custom-primaryGlow tracking-widest mb-1">COMPLETED</div>
+                            <h4 class="text-xl font-tech font-bold text-white">PHASE 1: Community & Events</h4>
+                            <p class="text-sm text-custom-gray mt-2">Establishment of the core contributor ecosystem and initial awareness event rollout.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-custom-primary -translate-x-1/2 shadow-[0_0_10px_rgba(168,85,247,0.5)] border-2 border-custom-bg z-10"></div>
+                        <div class="ml-12 md:ml-0 md:w-1/2 md:px-8 text-left md:group-odd:text-right">
+                            <div class="text-xs font-tech text-custom-primary tracking-widest mb-1">IN PROGRESS</div>
+                            <h4 class="text-xl font-tech font-bold text-white">PHASE 2: Bootcamps & Awareness Expansion</h4>
+                            <p class="text-sm text-custom-gray mt-2">Structured technical training and scaling institutional partnership programs.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-custom-primary bg-custom-bg -translate-x-1/2 z-10"></div>
+                        <div class="ml-12 md:ml-0 md:w-1/2 md:px-8 text-left md:group-odd:text-right">
+                            <div class="text-xs font-tech text-gray-500 tracking-widest mb-1">UPCOMING</div>
+                            <h4 class="text-xl font-tech font-bold text-white">PHASE 3: Cyber Range Development</h4>
+                            <p class="text-sm text-custom-gray mt-2">Engineering the proprietary infrastructure for hosted labs and simulation environments.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-gray-600 bg-custom-bg -translate-x-1/2 z-10"></div>
+                        <div class="ml-12 md:ml-0 md:w-1/2 md:px-8 text-left md:group-odd:text-right">
+                            <h4 class="text-xl font-tech font-bold text-gray-400">PHASE 4: Institutional Infrastructure Support</h4>
+                            <p class="text-sm text-gray-500 mt-2">Deploying our ranges to allied schools for integrated curriculum support.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-gray-600 bg-custom-bg -translate-x-1/2 z-10"></div>
+                        <div class="ml-12 md:ml-0 md:w-1/2 md:px-8 text-left md:group-odd:text-right">
+                            <h4 class="text-xl font-tech font-bold text-gray-400">PHASE 5: AI-Augmented Ecosystem</h4>
+                            <p class="text-sm text-gray-500 mt-2">Integrating LLMs and automation into the learning platform for adaptive threat simulation.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-gray-600 bg-custom-bg -translate-x-1/2 z-10"></div>
+                        <div class="ml-12 md:ml-0 md:w-1/2 md:px-8 text-left md:group-odd:text-right">
+                            <h4 class="text-xl font-tech font-bold text-gray-400">PHASE 6: National Innovation Network</h4>
+                            <p class="text-sm text-gray-500 mt-2">A mature, self-sustaining country-wide nexus of student cyber operations and research.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. HUMAN ELEMENT -->
+    <section class="py-24 relative z-10 border-t border-custom-primary/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">07 // Human Element</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">CONTRIBUTOR ECOSYSTEM</h3>
+                <p class="text-custom-gray mt-4 max-w-2xl mx-auto">Not just volunteering. We are building a structured environment where contributors gain tangible operational exposure.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-8 cyber-border reveal hover:bg-custom-surfaceHover">
+                    <i class="ph-duotone ph-briefcase text-4xl text-custom-primary mb-4 text-glow"></i>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Real-World Experience</h4>
+                    <p class="text-sm text-custom-gray">Manage actual infrastructure, lead operational teams, and design curriculum utilized by real institutions.</p>
+                </div>
+                <div class="glass-panel p-8 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
+                    <i class="ph-duotone ph-trend-up text-4xl text-custom-primary mb-4 text-glow"></i>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Technical Growth</h4>
+                    <p class="text-sm text-custom-gray">Direct access to experienced peers, internal training, and development sandboxes to sharpen your tactical skills.</p>
+                </div>
+                <div class="glass-panel p-8 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
+                    <i class="ph-duotone ph-star text-4xl text-custom-primary mb-4 text-glow"></i>
+                    <h4 class="text-xl font-tech font-bold text-white mb-3">Leadership Opportunities</h4>
+                    <p class="text-sm text-custom-gray">Step up into Division Lead roles. Learn project management and cross-functional team coordination.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. GALLERY -->
+    <section class="py-24 relative z-10 bg-custom-surface/50 border-t border-custom-primary/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">08 // Visual Intel</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">OPERATIONS GALLERY</h3>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+                <div class="col-span-2 row-span-2 relative group overflow-hidden border border-custom-primary/30 rounded reveal cyber-border bg-[#150724]">
+<img src="assets/ncwc.png" alt="NCWC 26 Finals" class="absolute inset-0 w-full h-full object-cover"/>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="ph-thin ph-image text-4xl text-custom-primary/30"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-custom-primary/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center p-6 text-center backdrop-blur-sm">
+                        <div>
+                            <h5 class="text-white font-tech font-bold text-2xl mb-1">NCWC '26 FINALS (Coming Soon)</h5>
+                            <p class="text-white/80 text-sm">Live attack-defense execution</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative group overflow-hidden border border-custom-primary/30 rounded reveal delay-100 cyber-border bg-[#150724]">
+<img src="assets/bootcamp.png" alt="Bootcamp Alpha" class="absolute inset-0 w-full h-full object-cover"/>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="ph-thin ph-image text-3xl text-custom-primary/30"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-custom-primary/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center text-center backdrop-blur-sm">
+                        <p class="text-white font-tech font-bold text-lg">Bootcamp Alpha</p>
+                    </div>
+                </div>
+
+                <div class="relative group overflow-hidden border border-custom-primary/30 rounded reveal delay-200 cyber-border bg-[#150724]">
+<img src="assets/coremeeting.png" alt="Core Meeting" class="absolute inset-0 w-full h-full object-cover"/>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="ph-thin ph-image text-3xl text-custom-primary/30"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-custom-primary/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center text-center backdrop-blur-sm">
+                        <p class="text-white font-tech font-bold text-lg">Core Meeting</p>
+                    </div>
+                </div>
+
+                <div class="col-span-2 relative group overflow-hidden border border-custom-primary/30 rounded reveal delay-100 cyber-border bg-[#150724]">
+                <img src="assets/schoolawareness.png" alt="School Awareness Program" class="absolute inset-0 w-full h-full object-cover"/>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="ph-thin ph-image text-4xl text-custom-primary/30"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-custom-primary/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center text-center backdrop-blur-sm">
+                        <p class="text-white font-tech font-bold text-xl">School Awareness Program</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. CONTACT -->
+    <section id="contact" class="py-24 relative z-10 border-t border-custom-primary/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div class="reveal">
+                    <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">09 // Communication Channel</h2>
+                    <h3 class="text-4xl md:text-5xl font-tech font-bold mb-6 text-white">INITIATE CONTACT</h3>
+                    <p class="text-custom-gray mb-8 text-lg">
+                        Whether you are a student looking to contribute, a professional offering mentorship, or an institution seeking partnership, the network is open.
+                    </p>
+
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 border border-custom-primary/30 flex items-center justify-center text-custom-primary group-hover:bg-custom-primary group-hover:text-white transition-colors rounded shadow-[0_0_10px_rgba(168,85,247,0.1)]">
+                                <i class="ph ph-envelope-simple text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-tech text-custom-gray uppercase tracking-widest">Official Mail</div>
+                                <a href="mailto:nullgridslabs@gmail.com" class="text-white hover:text-custom-primary transition-colors font-mono">nullgridslabs@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 border border-custom-primary/30 flex items-center justify-center text-custom-primary group-hover:bg-custom-primary group-hover:text-white transition-colors rounded shadow-[0_0_10px_rgba(168,85,247,0.1)]">
+                                <i class="ph ph-globe text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-tech text-custom-gray uppercase tracking-widest">Domain Server</div>
+                                <div class="text-white font-mono">nullgridslabs.dpdns.org</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4">
+                        <button class="px-6 py-3 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+                            <i class="ph-bold ph-user-plus"></i> Contributor Registration
+                        </button>
+                        <button class="px-6 py-3 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center gap-2">
+                            <i class="ph-bold ph-handshake"></i> Partnership Inquiry
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-8 cyber-border reveal delay-100 bg-custom-surface">
+                    <form class="space-y-6" onsubmit="event.preventDefault();">
+                        <div class="text-xs font-tech text-custom-primary tracking-widest border-b border-custom-primary/30 pb-2 mb-6 text-glow">
+                            SECURE TRANSMISSION PROTOCOL
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Designation (Name)</label>
+                                <input type="text" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Return Address (Email)</label>
+                                <input type="email" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Transmission Subject</label>
+                            <select class="w-full bg-custom-bg border border-custom-primary/30 text-custom-gray px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm appearance-none">
+                                <option>General Inquiry</option>
+                                <option>Join as Contributor</option>
+                                <option>Institutional Partnership</option>
+                                <option>NCWC Sponsorship</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Encrypted Payload (Message)</label>
+                            <textarea rows="4" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm resize-none" placeholder="Enter message data..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all font-tech font-bold uppercase tracking-widest flex items-center justify-center gap-2 group shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]">
+                            TRANSMIT DATA <i class="ph-bold ph-paper-plane-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. FOOTER -->
+    <footer class="border-t border-custom-primary/40 bg-[#0A0313] pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="ph-fill ph-shield-check text-custom-primary text-2xl text-glow"></i>
+                        <span class="font-tech text-3xl font-bold tracking-widest text-white">NULLGRIDS</span>
+                    </div>
+                    <div class="text-sm font-tech text-custom-gray uppercase tracking-widest">Student-led Cybersecurity Initiative</div>
+                </div>
+                
+                <div class="flex gap-4">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
+                        <i class="ph ph-twitter-logo text-xl"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
+                        <i class="ph ph-linkedin-logo text-xl"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
+                        <i class="ph ph-github-logo text-xl"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
+                        <i class="ph ph-discord-logo text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-custom-primary/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-custom-gray font-mono">
+                    &copy; 2026 NULLGRIDS Labs. Building Practical Cybersecurity Ecosystems for the Next Generation.
+                </p>
+                <div class="flex gap-6 text-xs text-custom-gray font-tech uppercase tracking-widest">
+                    <a href="#" class="hover:text-custom-primary transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-custom-primary transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Reveal
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+            // Navbar Background
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('nav-scrolled');
+                } else {
+                    navbar.classList.remove('nav-scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
