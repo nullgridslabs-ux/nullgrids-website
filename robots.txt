@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nullgridslabs.dpdns.org/sitemap.xml
