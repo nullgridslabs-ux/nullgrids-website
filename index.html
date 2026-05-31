@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <title>NULLGRIDS Labs | Cybersecurity Ecosystem for Education</title>
-    <meta name="description" content="NULLGRIDS Labs is a student-led cybersecurity ecosystem focused on cyber awareness, cybersecurity bootcamps, cyber warfare competitions, and educational cyber infrastructure.">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NULLGRIDS | Cybersecurity Ecosystem</title>
+    <title>NULLGRIDS Labs | Cybersecurity Ecosystem for Education</title>
+    <meta name="description" content="NULLGRIDS Labs is a student-led cybersecurity ecosystem focused on cyber awareness, cybersecurity bootcamps, cyber warfare competitions, and educational cyber infrastructure.">
     
+    <!-- SEO & Search Optimization -->
+    <meta name="keywords" content="NULLGRIDS, cybersecurity ecosystem, CTF, cyber warfare, student cybersecurity, cyber bootcamps, NCWC, Black Cipher, InfoSec education">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="NULLGRIDS Labs">
+    
+    <!-- Open Graph / Social Media (Discord, LinkedIn, Facebook) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NULLGRIDS Labs | Cybersecurity Ecosystem for Education">
+    <meta property="og:description" content="A student-led initiative focused on practical learning, cyber infrastructure, awareness, and operational cybersecurity experiences.">
+    <meta property="og:image" content="https://blackcipher.nullgridslabs.dpdns.org/assets/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NULLGRIDS Labs | Cybersecurity Ecosystem for Education">
+    <meta name="twitter:description" content="A student-led initiative focused on practical learning, cyber infrastructure, awareness, and operational cybersecurity experiences.">
+    <meta name="twitter:image" content="https://blackcipher.nullgridslabs.dpdns.org/assets/logo.png">
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com data:; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://unpkg.com;">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
@@ -50,7 +65,6 @@
             }
         }
     </script>
-    
 
     <style>
         body {
@@ -58,7 +72,6 @@
             color: #FFFFFF;
             overflow-x: hidden;
         }
-        
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
@@ -162,22 +175,38 @@
             <div class="hidden lg:flex items-center gap-8 text-sm font-tech tracking-wide text-custom-gray">
                 <a href="#about" class="hover:text-custom-primary transition-colors uppercase">About</a>
                 <a href="#initiatives" class="hover:text-custom-primary transition-colors uppercase">Initiatives</a>
-                <a href="https://blackcipher.nullgridslabs.dpdns.org" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph-fill ph-target text-custom-primary"></i> NCWC '26</a>
+                <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph-fill ph-target text-custom-primary"></i> NCWC '26</a>
                 <a href="#services" class="hover:text-custom-primary transition-colors uppercase">Services</a>
+                <a href="#faq" class="hover:text-custom-primary transition-colors uppercase">FAQ</a>
+                <a href="#sponsors" class="hover:text-custom-primary transition-colors uppercase">Sponsors</a>
                 <a href="#contact" class="px-5 py-2 bg-custom-primary/10 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all uppercase shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">Join Ecosystem</a>
             </div>
             
-            
-            <button class="lg:hidden text-2xl text-custom-primary">
-                <i class="ph ph-list"></i>
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl text-custom-primary p-2" aria-label="Toggle menu">
+                <i id="mobile-menu-icon" class="ph ph-list"></i>
             </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="lg:hidden hidden border-t border-custom-primary/20 bg-[rgba(13,5,24,0.97)] backdrop-blur-lg">
+            <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 font-tech tracking-wide text-sm">
+                <a href="#about" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">About</a>
+                <a href="#initiatives" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">Initiatives</a>
+                <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10 flex items-center gap-2"><i class="ph-fill ph-target text-custom-primary"></i> NCWC '26</a>
+                <a href="#services" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">Services</a>
+                <a href="#faq" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">FAQ</a>
+                <a href="#sponsors" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">Sponsors</a>
+                <a href="ctf_website/index.html" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()" class="text-custom-primaryGlow hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10 flex items-center gap-2"><i class="ph ph-terminal-window"></i> CTF Platform</a>
+                <a href="#contact" onclick="closeMobileMenu()" class="mt-2 px-5 py-3 bg-custom-primary text-white hover:bg-purple-400 transition-all uppercase text-center shadow-[0_0_15px_rgba(168,85,247,0.3)]">Join Ecosystem</a>
+            </div>
         </div>
     </nav>
 
     <!-- 1. HERO SECTION -->
     <section class="relative min-h-screen flex items-center justify-center pt-20 pb-20 overflow-hidden">
+        <!-- Hero depth gradient overlay -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(168,85,247,0.12),transparent_70%)] pointer-events-none"></div>
         <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
-    <img src="assets/hero.png" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover -z-10 opacity-30"/>
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded border border-custom-primary/30 bg-custom-primary/10 text-custom-primaryGlow text-xs font-tech tracking-widest uppercase mb-8 reveal">
                 <span class="w-2 h-2 rounded-full bg-custom-primary animate-pulse"></span>
                 Cybersecurity Infrastructure & Skill Ecosystem for Education
@@ -200,7 +229,6 @@
                 <a href="#operation-black-cipher" class="w-full sm:w-auto px-8 py-4 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center justify-center gap-2">
                     <i class="ph ph-crosshair"></i> View Operations
                 </a>
-                
             </div>
         </div>
     </section>
@@ -341,26 +369,9 @@
                         </div>
                     </div>
 
-                    <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-white hover:text-custom-primary font-tech tracking-widest transition-colors uppercase border-b border-custom-primary pb-1">
-                        ACCESS INTEL BRIEFING <i class="ph-bold ph-arrow-right"></i>
+                    <a href="ctf_website/index.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-white hover:text-custom-primary font-tech tracking-widest transition-colors uppercase border-b border-custom-primary pb-1">
+                        ACCESS CTF PLATFORM <i class="ph-bold ph-arrow-right"></i>
                     </a>
-                    <div class="flex flex-wrap gap-4 mt-6">
-                        <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank"
-                        class="px-5 py-3 bg-custom-primary text-white font-tech tracking-widest uppercase border border-custom-primary hover:bg-purple-400 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)]">
-                            Official Event Portal
-                    </a>
-
-                    <a href="https://discord.gg/khGCzPT7" target="_blank"
-                    class="px-5 py-3 border border-custom-primary/50 text-white font-tech tracking-widest uppercase hover:bg-custom-primary/10 transition-all">
-                        Join Discord
-                    </a>
-                
-                    <a href="mailto:nullgridslabs@gmail.com"
-                    class="px-5 py-3 border border-custom-primary/50 text-white font-tech tracking-widest uppercase hover:bg-custom-primary/10 transition-all">
-                        Sponsorship Contact
-                    </a>
-                
-                </div>
                 </div>
 
                 <div class="w-full lg:w-1/2 reveal delay-200">
@@ -469,138 +480,122 @@
                 <p class="text-custom-gray mt-4 max-w-2xl mx-auto">The strategic and operational leads driving the NULLGRIDS ecosystem.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- 1 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                <!-- 1: Founder -->
                 <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Founder & Director</div>
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Founder &amp; Director</div>
                     <h4 class="text-xl font-tech font-bold text-white mb-4">Syed Raihaan S</h4>
                     <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Vision & Strategic Direction</li>
-                        <li><span class="text-custom-primary">></span> Institutional Relations</li>
-                        <li><span class="text-custom-primary">></span> Ecosystem Development</li>
-                        <li><span class="text-custom-primary">></span> Event Leadership</li>
-                        <li><span class="text-custom-primary">></span> Operations Oversight</li>
-                        <li><span class="text-custom-primary">></span> Partnership Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Vision &amp; Strategic Direction</li>
+                        <li><span class="text-custom-primary">&gt;</span> Institutional Relations</li>
+                        <li><span class="text-custom-primary">&gt;</span> Ecosystem Development</li>
+                        <li><span class="text-custom-primary">&gt;</span> Event Leadership</li>
+                        <li><span class="text-custom-primary">&gt;</span> Partnership Coordination</li>
                     </ul>
                 </div>
-                
-                <!-- 2 -->
+
+                <!-- 2: Operational Lead -->
                 <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Core Operations & Coordination</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">HariShakthi</h4>
-                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Internal Team Coordination</li>
-                        <li><span class="text-custom-primary">></span> Operational Planning</li>
-                        <li><span class="text-custom-primary">></span> Execution Monitoring</li>
-                        <li><span class="text-custom-primary">></span> Contributor Management</li>
-                        <li><span class="text-custom-primary">></span> Timeline Supervision</li>
-                    </ul>
-                </div>
-
-                <!-- 3 -->
-                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Technical Operations Lead</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">Arumugapandi</h4>
-                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Cyber Range Infrastructure</li>
-                        <li><span class="text-custom-primary">></span> Technical Deployment</li>
-                        <li><span class="text-custom-primary">></span> Event Systems</li>
-                        <li><span class="text-custom-primary">></span> Platform Operations</li>
-                        <li><span class="text-custom-primary">></span> Infrastructure Coordination</li>
-                    </ul>
-                </div>
-
-                <!-- 4 -->
-                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Outreach & Partnership Lead</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">Harishakthi</h4>
-                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> School & College Outreach</li>
-                        <li><span class="text-custom-primary">></span> External Communications</li>
-                        <li><span class="text-custom-primary">></span> Sponsorship Coordination</li>
-                        <li><span class="text-custom-primary">></span> Partnership Development</li>
-                        <li><span class="text-custom-primary">></span> Institutional Networking</li>
-                    </ul>
-                </div>
-
-                <!-- 5 -->
-                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Design, Branding & Media Lead</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">SanthaKumar</h4>
-                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Brand Identity</li>
-                        <li><span class="text-custom-primary">></span> Event Media</li>
-                        <li><span class="text-custom-primary">></span> Creative Direction</li>
-                        <li><span class="text-custom-primary">></span> Public Visual Presence</li>
-                        <li><span class="text-custom-primary">></span> Social Media Coordination</li>
-                    </ul>
-                </div>
-
-                <!-- 6 -->
-                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Finance Lead</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">Tamilselvan</h4>
-                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Budget Planning</li>
-                        <li><span class="text-custom-primary">></span> Expense Tracking</li>
-                        <li><span class="text-custom-primary">></span></li>
-                        <li><span class="text-custom-primary">></span> Financial Coordination</li>
-                        <li><span class="text-custom-primary">></span> Proposal & Reporting Support</li>
-                    </ul>
-                </div>
-
-                <!-- 7 -->
-                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Registration & Participant Relations</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">Priyan and sashvini</h4>
-                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Registration Systems</li>
-                        <li><span class="text-custom-primary">></span> Participant Communication</li>
-                        <li><span class="text-custom-primary">></span> Help Desk Coordination</li>
-                        <li><span class="text-custom-primary">></span> Event Participant Support</li>
-                        <li><span class="text-custom-primary">></span> Verification Management</li>
-                    </ul>
-                </div>
-
-                <!-- 8 -->
-                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Operations & Logistics Lead</div>
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Operational Lead</div>
                     <h4 class="text-xl font-tech font-bold text-white mb-4">harisakthi</h4>
                     <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Venue Coordination</li>
-                        <li><span class="text-custom-primary">></span> Operational Readiness</li>
-                        <li><span class="text-custom-primary">></span> Infrastructure Logistics</li>
-                        <li><span class="text-custom-primary">></span> Event-Day Operations</li>
-                        <li><span class="text-custom-primary">></span> Resource Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Internal Team Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Operational Planning</li>
+                        <li><span class="text-custom-primary">&gt;</span> Execution Monitoring</li>
+                        <li><span class="text-custom-primary">&gt;</span> Event-Day Operations</li>
+                        <li><span class="text-custom-primary">&gt;</span> Resource Coordination</li>
                     </ul>
                 </div>
 
-                <!-- 9 -->
+                <!-- 3: Documentation Lead -->
                 <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Volunteer & Workforce Coord.</div>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">Syed raihaan</h4>
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Documentation Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">sheik nifla</h4>
                     <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Volunteer Management</li>
-                        <li><span class="text-custom-primary">></span> Workforce Allocation</li>
-                        <li><span class="text-custom-primary">></span> Team Coordination</li>
-                        <li><span class="text-custom-primary">></span> Internal Operational Support</li>
+                        <li><span class="text-custom-primary">&gt;</span> Documentation Management</li>
+                        <li><span class="text-custom-primary">&gt;</span> Proposal &amp; Reporting</li>
+                        <li><span class="text-custom-primary">&gt;</span> Budget Planning</li>
+                        <li><span class="text-custom-primary">&gt;</span> Record Keeping</li>
+                        <li><span class="text-custom-primary">&gt;</span> Quality Assurance</li>
                     </ul>
                 </div>
 
-                <!-- 10 -->
+                <!-- 4: Marketing Lead -->
                 <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
-                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Documentation & Complaince leaddiv>
-                    <h4 class="text-xl font-tech font-bold text-white mb-4">Sheik nifla</h4>
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Marketing Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">SanthaKumar</h4>
                     <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
-                        <li><span class="text-custom-primary">></span> Documentation Management</li>
-                        <li><span class="text-custom-primary">></span> Infrastructure Testing</li>
-                        <li><span class="text-custom-primary">></span> Technical Quality Assurance</li>
-                        <li><span class="text-custom-primary">></span> Operational Readiness Verif.</li>
+                        <li><span class="text-custom-primary">&gt;</span> Brand Identity</li>
+                        <li><span class="text-custom-primary">&gt;</span> Event Media &amp; Creative Direction</li>
+                        <li><span class="text-custom-primary">&gt;</span> Social Media Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Public Visual Presence</li>
+                        <li><span class="text-custom-primary">&gt;</span> Campaign Strategy</li>
                     </ul>
                 </div>
 
-            </div>
-        </div>
+                <!-- 5: Technical Lead -->
+                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Technical Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Arumugapandi</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">&gt;</span> Cyber Range Infrastructure</li>
+                        <li><span class="text-custom-primary">&gt;</span> Technical Deployment</li>
+                        <li><span class="text-custom-primary">&gt;</span> Platform Operations</li>
+                        <li><span class="text-custom-primary">&gt;</span> Event Systems</li>
+                        <li><span class="text-custom-primary">&gt;</span> Infrastructure Coordination</li>
+                    </ul>
+                </div>
+
+                <!-- 6: Marketing Associate -->
+                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Marketing Associate</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Priyan</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">&gt;</span> Content Creation</li>
+                        <li><span class="text-custom-primary">&gt;</span> Social Media Support</li>
+                        <li><span class="text-custom-primary">&gt;</span> Event Promotion</li>
+                        <li><span class="text-custom-primary">&gt;</span> Audience Engagement</li>
+                    </ul>
+                </div>
+
+                <!-- 7: Finance Lead -->
+                <div class="glass-panel p-6 cyber-border reveal hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Finance Lead</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">TamilSelvan</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">&gt;</span> Budget Planning</li>
+                        <li><span class="text-custom-primary">&gt;</span> Expense Tracking</li>
+                        <li><span class="text-custom-primary">&gt;</span> Financial Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Fund Allocation</li>
+                    </ul>
+                </div>
+
+                <!-- 8: Partnership & Outreach Associate -->
+                <div class="glass-panel p-6 cyber-border reveal delay-100 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Partnership and outreach Associate</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Pradeesh</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">&gt;</span> School &amp; College Outreach</li>
+                        <li><span class="text-custom-primary">&gt;</span> External Communications</li>
+                        <li><span class="text-custom-primary">&gt;</span> Sponsorship Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Institutional Networking</li>
+                    </ul>
+                </div>
+
+                <!-- 9: Documentation Associate -->
+                <div class="glass-panel p-6 cyber-border reveal delay-200 hover:bg-custom-surfaceHover">
+                    <div class="text-[10px] font-tech text-custom-primaryGlow tracking-widest mb-2 uppercase border border-custom-primary/30 inline-block px-2 py-0.5 rounded bg-custom-primary/10">Documentation Associate</div>
+                    <h4 class="text-xl font-tech font-bold text-white mb-4">Sashvini</h4>
+                    <ul class="text-xs text-custom-gray space-y-1.5 font-mono">
+                        <li><span class="text-custom-primary">&gt;</span> Record &amp; Report Support</li>
+                        <li><span class="text-custom-primary">&gt;</span> Participant Communication</li>
+                        <li><span class="text-custom-primary">&gt;</span> Help Desk Coordination</li>
+                        <li><span class="text-custom-primary">&gt;</span> Verification Management</li>
+                    </ul>
+                </div>
+
+            </div>        </div>
     </section>
 
     <!-- 6. CAPABILITY MATRIX -->
@@ -814,10 +809,19 @@
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
-                <div class="col-span-2 row-span-2 relative group overflow-hidden border border-custom-primary/30 rounded reveal cyber-border bg-[#150724]">
-<img src="assets/ncwc.png" alt="NCWC 26 Finals" class="absolute inset-0 w-full h-full object-cover"/>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <i class="ph-thin ph-image text-4xl text-custom-primary/30"></i>
+                <div class="col-span-2 row-span-2 relative group overflow-hidden border border-custom-primary/30 rounded reveal cyber-border bg-[#150724] flex items-center justify-center">
+                    <!-- Animated grid background -->
+                    <div class="absolute inset-0" style="background-image: linear-gradient(rgba(168,85,247,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.07) 1px, transparent 1px); background-size: 32px 32px;"></div>
+                    <div class="absolute inset-0 bg-gradient-to-br from-custom-primary/10 via-transparent to-purple-900/20"></div>
+                    <!-- Glow orb -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-custom-primary/20 rounded-full blur-[60px]"></div>
+                    <div class="relative z-10 text-center px-6">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 border border-red-400/50 bg-red-400/10 text-red-400 text-xs font-tech tracking-widest rounded mb-4">
+                            <span class="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></span> CLASSIFIED // UPCOMING
+                        </div>
+                        <h5 class="text-white font-tech font-bold text-3xl mb-2 text-glow">NCWC '26</h5>
+                        <p class="text-custom-primaryGlow font-tech tracking-widest text-sm mb-3">NATIONAL CYBER WARFARE CHAMPIONSHIP</p>
+                        <p class="text-custom-gray text-xs max-w-xs mx-auto">Live attack-defense finals. Imagery will be released post-event.</p>
                     </div>
                     <div class="absolute inset-0 bg-custom-primary/80 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center p-6 text-center backdrop-blur-sm">
                         <div>
@@ -860,12 +864,121 @@
         </div>
     </section>
 
+    <!-- FAQ SECTION -->
+    <section id="faq" class="py-24 relative z-10 bg-custom-surface/30 border-t border-custom-primary/20">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">10 // Intelligence Briefing</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white">FREQUENTLY ASKED</h3>
+            </div>
+
+            <div class="space-y-4 reveal" id="faq-accordion">
+
+                <div class="glass-panel border border-custom-primary/20 overflow-hidden faq-item">
+                    <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left group hover:bg-custom-primary/5 transition-colors">
+                        <span class="font-tech text-white text-lg">What is NULLGRIDS?</span>
+                        <i class="ph ph-plus text-custom-primary text-xl flex-shrink-0 transition-transform faq-icon"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-custom-gray text-sm pb-6">NULLGRIDS is a student-led cybersecurity initiative focused on building a comprehensive technical ecosystem. We run bootcamps, school awareness programs, cyber infrastructure projects, and competitive events — all designed to bridge the gap between academic theory and real-world tactical execution.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel border border-custom-primary/20 overflow-hidden faq-item">
+                    <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left group hover:bg-custom-primary/5 transition-colors">
+                        <span class="font-tech text-white text-lg">Who can join NULLGRIDS?</span>
+                        <i class="ph ph-plus text-custom-primary text-xl flex-shrink-0 transition-transform faq-icon"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-custom-gray text-sm pb-6">Any student passionate about cybersecurity — regardless of skill level. We welcome beginners, intermediate learners, and advanced practitioners. Contributors can join technical, design, outreach, operations, or documentation divisions. Use the contact form to register your interest.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel border border-custom-primary/20 overflow-hidden faq-item">
+                    <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left group hover:bg-custom-primary/5 transition-colors">
+                        <span class="font-tech text-white text-lg">What is NCWC (National Cyber Warfare Championship)?</span>
+                        <i class="ph ph-plus text-custom-primary text-xl flex-shrink-0 transition-transform faq-icon"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-custom-gray text-sm pb-6">NCWC is NULLGRIDS' flagship event — a narrative-driven, AI-augmented attack-defense CTF (Capture the Flag) competition simulating real-world nation-state cyber warfare scenarios. It is designed to push participants to their operational limits across multiple domains including DFIR, Red Teaming, SOC Ops, and Threat Intelligence.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel border border-custom-primary/20 overflow-hidden faq-item">
+                    <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left group hover:bg-custom-primary/5 transition-colors">
+                        <span class="font-tech text-white text-lg">How do I register for NCWC '26?</span>
+                        <i class="ph ph-plus text-custom-primary text-xl flex-shrink-0 transition-transform faq-icon"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-custom-gray text-sm pb-6">Registration details for NCWC '26 will be announced through our official channels. Keep an eye on our Instagram and LinkedIn pages, or send us a message at <a href="mailto:nullgridslabs@gmail.com" class="text-custom-primary hover:underline">nullgridslabs@gmail.com</a> to be added to the notification list.</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel border border-custom-primary/20 overflow-hidden faq-item">
+                    <button onclick="toggleFAQ(this)" class="w-full flex items-center justify-between p-6 text-left group hover:bg-custom-primary/5 transition-colors">
+                        <span class="font-tech text-white text-lg">Is joining NULLGRIDS free?</span>
+                        <i class="ph ph-plus text-custom-primary text-xl flex-shrink-0 transition-transform faq-icon"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-0 max-h-0 overflow-hidden transition-all duration-300">
+                        <p class="text-custom-gray text-sm pb-6">Yes. Joining NULLGRIDS as a contributor is completely free. We are a student-driven community. Some events like bootcamps or NCWC may have associated registration or venue fees — these will always be communicated transparently in advance.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SPONSOR SECTION -->
+    <section id="sponsors" class="py-24 relative z-10 bg-custom-bg border-t border-custom-primary/20 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_rgba(168,85,247,0.08),_transparent_70%)]"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">11 // Partnerships</h2>
+                <h3 class="text-4xl md:text-5xl font-tech font-bold text-white mb-4">BECOME A SPONSOR</h3>
+                <p class="text-custom-gray text-lg max-w-2xl mx-auto">Support the next generation of cybersecurity professionals. Partner with NULLGRIDS to gain visibility in the student tech community and contribute to building a stronger cyber workforce.</p>
+            </div>
+
+            <div class="glass-panel p-10 cyber-border reveal delay-100 text-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="w-14 h-14 rounded-full bg-custom-primary/10 border border-custom-primary/30 flex items-center justify-center">
+                            <i class="ph ph-eye text-custom-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-tech text-white font-bold">Brand Visibility</h4>
+                        <p class="text-custom-gray text-sm">Logo placement across event materials, website, and social media.</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="w-14 h-14 rounded-full bg-custom-primary/10 border border-custom-primary/30 flex items-center justify-center">
+                            <i class="ph ph-users text-custom-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-tech text-white font-bold">Talent Access</h4>
+                        <p class="text-custom-gray text-sm">Direct access to a vetted pool of skilled student cybersecurity professionals.</p>
+                    </div>
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="w-14 h-14 rounded-full bg-custom-primary/10 border border-custom-primary/30 flex items-center justify-center">
+                            <i class="ph ph-handshake text-custom-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-tech text-white font-bold">Community Impact</h4>
+                        <p class="text-custom-gray text-sm">Be part of building Pakistan's next-generation cyber defense workforce.</p>
+                    </div>
+                </div>
+
+                <div class="border-t border-custom-primary/20 pt-8">
+                    <p class="text-custom-gray mb-6">Interested in sponsoring NCWC '26 or partnering with NULLGRIDS? Reach out directly:</p>
+                    <a href="mailto:nullgridslabs@gmail.com" class="inline-flex items-center gap-3 px-8 py-4 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)]">
+                        <i class="ph-bold ph-envelope-simple"></i> nullgridslabs@gmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 11. CONTACT -->
     <section id="contact" class="py-24 relative z-10 border-t border-custom-primary/20">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <div class="reveal">
-                    <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">09 // Communication Channel</h2>
+                    <h2 class="text-sm font-tech text-custom-primary tracking-widest uppercase mb-2">12 // Communication Channel</h2>
                     <h3 class="text-4xl md:text-5xl font-tech font-bold mb-6 text-white">INITIATE CONTACT</h3>
                     <p class="text-custom-gray mb-8 text-lg">
                         Whether you are a student looking to contribute, a professional offering mentorship, or an institution seeking partnership, the network is open.
@@ -892,13 +1005,26 @@
                         </div>
                     </div>
 
+                    <!-- Social Media Links -->
+                    <div class="mb-8">
+                        <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-3">Follow Us</div>
+                        <div class="flex gap-3">
+                            <a href="https://www.instagram.com/nullgrids_lab?igsh=MWRnZzBzMWcxaDB6aA==" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 border border-custom-primary/30 text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded text-sm font-tech">
+                                <i class="ph ph-instagram-logo text-lg"></i> Instagram
+                            </a>
+                            <a href="https://www.linkedin.com/in/nullgrid-labs-468502403" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 border border-custom-primary/30 text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded text-sm font-tech">
+                                <i class="ph ph-linkedin-logo text-lg"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="flex flex-wrap gap-4">
-                        <button class="px-6 py-3 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+                        <a href="mailto:nullgridslabs@gmail.com?subject=Contributor Registration" class="px-6 py-3 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
                             <i class="ph-bold ph-user-plus"></i> Contributor Registration
-                        </button>
-                        <button class="px-6 py-3 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center gap-2">
+                        </a>
+                        <a href="mailto:nullgridslabs@gmail.com?subject=Partnership Inquiry" class="px-6 py-3 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center gap-2">
                             <i class="ph-bold ph-handshake"></i> Partnership Inquiry
-                        </button>
+                        </a>
                     </div>
                 </div>
 
@@ -956,17 +1082,14 @@
                 </div>
                 
                 <div class="flex gap-4">
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
-                        <i class="ph ph-twitter-logo text-xl"></i>
+                    <a href="https://www.instagram.com/nullgrids_lab?igsh=MWRnZzBzMWcxaDB6aA==" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded" title="Instagram">
+                        <i class="ph ph-instagram-logo text-xl"></i>
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
+                    <a href="https://www.linkedin.com/in/nullgrid-labs-468502403" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded" title="LinkedIn">
                         <i class="ph ph-linkedin-logo text-xl"></i>
                     </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
-                        <i class="ph ph-github-logo text-xl"></i>
-                    </a>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded">
-                        <i class="ph ph-discord-logo text-xl"></i>
+                    <a href="mailto:nullgridslabs@gmail.com" class="w-10 h-10 border border-custom-primary/30 flex items-center justify-center text-custom-gray hover:text-white hover:bg-custom-primary hover:border-custom-primary transition-all rounded" title="Email">
+                        <i class="ph ph-envelope-simple text-xl"></i>
                     </a>
                 </div>
             </div>
@@ -976,25 +1099,68 @@
                     &copy; 2026 NULLGRIDS Labs. Building Practical Cybersecurity Ecosystems for the Next Generation.
                 </p>
                 <div class="flex gap-6 text-xs text-custom-gray font-tech uppercase tracking-widest">
-                    <a href="#" class="hover:text-custom-primary transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-custom-primary transition-colors">Terms of Service</a>
+                    <a href="privacy-policy.html" class="hover:text-custom-primary transition-colors">Privacy Policy</a>
+                    <a href="terms-of-service.html" class="hover:text-custom-primary transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      <url>
-        <loc>https://nullgridslabs.dpdns.org/</loc>
-      </url>
-    </urlset>
+
+    <!-- FAQ Toggle Script -->
+    <script>
+        function toggleFAQ(btn) {
+            const body = btn.nextElementSibling;
+            const icon = btn.querySelector('.faq-icon');
+            const isOpen = body.style.maxHeight && body.style.maxHeight !== '0px';
+
+            // Close all
+            document.querySelectorAll('.faq-body').forEach(b => { b.style.maxHeight = '0px'; b.style.paddingBottom = '0'; });
+            document.querySelectorAll('.faq-icon').forEach(i => i.classList.replace('ph-minus', 'ph-plus'));
+
+            if (!isOpen) {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                icon.classList.replace('ph-plus', 'ph-minus');
+            }
+        }
+    </script>
 
     <!-- Scripts -->
     <script>
+        // Mobile Menu Toggle
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            menu.classList.add('hidden');
+            icon.className = 'ph ph-list';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Button
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+
+            btn.addEventListener('click', () => {
+                const isHidden = menu.classList.contains('hidden');
+                if (isHidden) {
+                    menu.classList.remove('hidden');
+                    icon.className = 'ph ph-x';
+                } else {
+                    menu.classList.add('hidden');
+                    icon.className = 'ph ph-list';
+                }
+            });
+
+            // Close mobile menu on outside click
+            document.addEventListener('click', (e) => {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            });
+
             // Scroll Reveal
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
@@ -1004,7 +1170,7 @@
 
             document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-            // Navbar Background
+            // Navbar Background on Scroll
             const navbar = document.getElementById('navbar');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {

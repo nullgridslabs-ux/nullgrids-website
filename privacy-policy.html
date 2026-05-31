@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NULLGRIDS | Privacy Policy</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com data:; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://unpkg.com;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.3"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        custom: {
+                            bg: '#0D0518',
+                            surface: '#1A0B2E',
+                            surfaceHover: '#251042',
+                            primary: '#A855F7',
+                            primaryGlow: '#D8B4FE',
+                            white: '#FFFFFF',
+                            gray: '#A1A1AA'
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0D0518; color: #FFFFFF; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0D0518; }
+        ::-webkit-scrollbar-thumb { background: #251042; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A855F7; }
+        .glass-panel { background: rgba(26, 11, 46, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(168, 85, 247, 0.15); transition: all 0.3s ease; }
+        .nav-scrolled { background-color: rgba(13, 5, 24, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(168, 85, 247, 0.2); }
+        .text-glow { text-shadow: 0 0 15px rgba(168, 85, 247, 0.6); }
+        .bg-grid-animated {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(to right, rgba(168, 85, 247, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px; animation: gridMove 20s linear infinite; z-index: -1;
+        }
+        @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
+    </style>
+</head>
+<body class="antialiased selection:bg-custom-primary selection:text-white relative">
+
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="bg-grid-animated"></div>
+        <div class="absolute top-[-20%] left-[20%] w-[800px] h-[800px] bg-custom-primary/10 rounded-full blur-[150px]"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 nav-scrolled">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.jpeg" alt="NULLGRIDS Labs Logo" class="w-10 h-10 object-contain"/>
+                <span class="font-tech text-2xl font-bold tracking-widest text-white group-hover:text-custom-primaryGlow transition-colors">NULLGRIDS</span>
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-8 text-sm font-tech tracking-wide text-custom-gray">
+                <a href="index.html#about" class="hover:text-custom-primary transition-colors uppercase">About</a>
+                <a href="index.html#initiatives" class="hover:text-custom-primary transition-colors uppercase">Initiatives</a>
+                <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph-fill ph-target text-custom-primary"></i> NCWC '26</a>
+                <a href="index.html#services" class="hover:text-custom-primary transition-colors uppercase">Services</a>
+                <a href="index.html#faq" class="hover:text-custom-primary transition-colors uppercase">FAQ</a>
+                <a href="index.html#contact" class="px-5 py-2 bg-custom-primary/10 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all uppercase shadow-[0_0_15px_rgba(168,85,247,0.2)]">Join Ecosystem</a>
+            </div>
+            
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl text-custom-primary p-2">
+                <i id="mobile-menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="lg:hidden hidden border-t border-custom-primary/20 bg-[rgba(13,5,24,0.97)] backdrop-blur-lg">
+            <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 font-tech tracking-wide text-sm">
+                <a href="index.html#about" class="text-custom-gray hover:text-custom-primary uppercase py-2 border-b border-custom-primary/10">About</a>
+                <a href="index.html#initiatives" class="text-custom-gray hover:text-custom-primary uppercase py-2 border-b border-custom-primary/10">Initiatives</a>
+                <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" class="text-custom-gray hover:text-custom-primary uppercase py-2 border-b border-custom-primary/10">NCWC '26</a>
+                <a href="index.html#contact" class="mt-2 px-5 py-3 bg-custom-primary text-white text-center uppercase">Join Ecosystem</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <section class="pt-32 pb-24 relative z-10 min-h-screen">
+        <div class="max-w-4xl mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-tech font-bold text-white mb-2">PRIVACY POLICY</h1>
+            <div class="text-custom-primaryGlow font-tech text-sm mb-10 border-b border-custom-primary/30 pb-4">LAST UPDATED: V1.0 // 2026</div>
+            
+            <div class="glass-panel p-8 space-y-8 text-custom-gray">
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">1. Information Collection</h2>
+                    <p>When you register as a contributor, partner, or participant in NULLGRIDS operations (including NCWC), we collect necessary identification and contact information. This may include your name, educational institution, email address, and technical skill set.</p>
+                </div>
+                
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">2. Data Usage & Telemetry</h2>
+                    <p>Your data is used strictly for operational coordination, event registration, and communication regarding NULLGRIDS initiatives. We do not sell your personal data to third-party brokers. Participant performance metrics during Capture The Flag (CTF) events may be logged for scoring and leaderboards.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">3. Communication Protocols</h2>
+                    <p>By providing your email address, you consent to receive operational briefings, event updates, and partnership communications. You may opt out of non-critical communications at any time by contacting our command center.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">4. Security Posture</h2>
+                    <p>We implement standard security measures to protect the information you submit. However, no transmission over the internet is completely secure. Participants engaging in our CTF platforms are reminded to use dedicated credentials and not reuse passwords from critical personal accounts.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">5. Contact Information</h2>
+                    <p>For inquiries regarding this privacy policy or to request data removal, contact us at: <a href="mailto:nullgridslabs@gmail.com" class="text-custom-primary hover:text-white transition-colors">nullgridslabs@gmail.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 relative z-10 border-t border-custom-primary/20 bg-custom-bg">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-custom-gray text-sm mb-4">
+                &copy; 2026 NULLGRIDS Labs. Building Practical Cybersecurity Ecosystems for the Next Generation.
+            </p>
+            <div class="flex justify-center gap-6 text-xs text-custom-gray font-tech uppercase tracking-widest">
+                <a href="privacy-policy.html" class="text-custom-primary">Privacy Policy</a>
+                <a href="terms-of-service.html" class="hover:text-custom-primary transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = 'ph ph-x';
+            } else {
+                menu.classList.add('hidden');
+                icon.className = 'ph ph-list';
+            }
+        });
+    </script>
+</body>
+</html>
