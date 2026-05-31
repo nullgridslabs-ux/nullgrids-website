@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NULLGRIDS Labs | Responsible Disclosure Policy</title>
+    <meta name="description" content="Responsible Disclosure Policy for NULLGRIDS Labs — how to responsibly report security vulnerabilities found in our platforms.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="NULLGRIDS Labs">
+    <link rel="canonical" href="https://nullgridslabs.dpdns.org/responsible-disclosure.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nullgridslabs.dpdns.org/responsible-disclosure.html">
+    <meta property="og:title" content="NULLGRIDS Labs | Responsible Disclosure Policy">
+    <meta property="og:description" content="How to responsibly report security vulnerabilities found in NULLGRIDS Labs platforms.">
+    <meta property="og:image" content="https://nullgridslabs.dpdns.org/logo.jpeg">
+    <meta property="og:site_name" content="NULLGRIDS Labs">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NULLGRIDS Labs | Responsible Disclosure Policy">
+    <meta name="twitter:description" content="How to responsibly report security vulnerabilities found in NULLGRIDS Labs platforms.">
+    <meta name="twitter:image" content="https://nullgridslabs.dpdns.org/logo.jpeg">
+
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://unpkg.com data:; img-src 'self' data:; connect-src 'self' https://unpkg.com;">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.3"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        custom: {
+                            bg: '#0D0518',
+                            surface: '#1A0B2E',
+                            surfaceHover: '#251042',
+                            primary: '#A855F7',
+                            primaryGlow: '#D8B4FE',
+                            white: '#FFFFFF',
+                            gray: '#A1A1AA'
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0D0518; color: #FFFFFF; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0D0518; }
+        ::-webkit-scrollbar-thumb { background: #251042; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A855F7; }
+        .glass-panel { background: rgba(26, 11, 46, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(168, 85, 247, 0.15); transition: all 0.3s ease; }
+        .nav-scrolled { background-color: rgba(13, 5, 24, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(168, 85, 247, 0.2); }
+        .text-glow { text-shadow: 0 0 15px rgba(168, 85, 247, 0.6); }
+        .bg-grid-animated {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(to right, rgba(168, 85, 247, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px; animation: gridMove 20s linear infinite; z-index: -1;
+        }
+        @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
+        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: 1px solid rgba(168,85,247,0.5); border-radius: 50%; color: #A855F7; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+    </style>
+</head>
+<body class="antialiased selection:bg-custom-primary selection:text-white relative">
+
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="bg-grid-animated"></div>
+        <div class="absolute top-[-20%] left-[20%] w-[800px] h-[800px] bg-custom-primary/10 rounded-full blur-[150px]"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 nav-scrolled">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.jpeg" alt="NULLGRIDS Labs Logo" class="w-10 h-10 object-contain" loading="lazy" width="40" height="40"/>
+                <span class="font-tech text-2xl font-bold tracking-widest text-white group-hover:text-custom-primaryGlow transition-colors">NULLGRIDS</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-8 text-sm font-tech tracking-wide text-custom-gray">
+                <a href="index.html#about" class="hover:text-custom-primary transition-colors uppercase">About</a>
+                <a href="index.html#initiatives" class="hover:text-custom-primary transition-colors uppercase">Initiatives</a>
+                <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph-fill ph-target text-custom-primary"></i> NCWC '26</a>
+                <a href="index.html#services" class="hover:text-custom-primary transition-colors uppercase">Services</a>
+                <a href="index.html#faq" class="hover:text-custom-primary transition-colors uppercase">FAQ</a>
+                <a href="index.html#contact" class="px-5 py-2 bg-custom-primary/10 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all uppercase shadow-[0_0_15px_rgba(168,85,247,0.2)]">Join Ecosystem</a>
+            </div>
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl text-custom-primary p-2">
+                <i id="mobile-menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden border-t border-custom-primary/20 bg-[rgba(13,5,24,0.97)] backdrop-blur-lg">
+            <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 font-tech tracking-wide text-sm">
+                <a href="index.html#about" class="text-custom-gray hover:text-custom-primary uppercase py-2 border-b border-custom-primary/10">About</a>
+                <a href="index.html#initiatives" class="text-custom-gray hover:text-custom-primary uppercase py-2 border-b border-custom-primary/10">Initiatives</a>
+                <a href="https://blackcipher.nullgridslabs.dpdns.org" target="_blank" rel="noopener noreferrer" class="text-custom-gray hover:text-custom-primary uppercase py-2 border-b border-custom-primary/10">NCWC '26</a>
+                <a href="index.html#contact" class="mt-2 px-5 py-3 bg-custom-primary text-white text-center uppercase">Join Ecosystem</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <section class="pt-32 pb-24 relative z-10 min-h-screen">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="flex items-center gap-3 mb-4">
+                <i class="ph ph-bug-beetle text-custom-primary text-3xl"></i>
+                <span class="text-xs font-tech text-custom-primary tracking-widest uppercase border border-custom-primary/30 px-2 py-0.5 rounded bg-custom-primary/10">Legal // Trust</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-tech font-bold text-white mb-2">RESPONSIBLE DISCLOSURE</h1>
+            <div class="text-custom-primaryGlow font-tech text-sm mb-10 border-b border-custom-primary/30 pb-4">LAST UPDATED: V1.0 // 2026</div>
+
+            <!-- Hero callout -->
+            <div class="border border-custom-primary/40 bg-custom-primary/5 rounded p-6 mb-8 flex gap-4 items-start">
+                <i class="ph ph-info text-custom-primary text-2xl flex-shrink-0 mt-0.5"></i>
+                <div>
+                    <div class="font-tech font-bold text-white mb-1 uppercase tracking-wide">We Welcome Ethical Researchers</div>
+                    <p class="text-custom-gray text-sm">NULLGRIDS Labs is a cybersecurity organization. We respect and appreciate the security research community. If you discover a vulnerability in our platforms, please report it responsibly so we can fix it before it is exploited.</p>
+                </div>
+            </div>
+
+            <div class="glass-panel p-8 space-y-8 text-custom-gray">
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">1. Scope</h2>
+                    <p class="mb-3">This policy applies to vulnerabilities discovered in NULLGRIDS Labs owned and operated services:</p>
+                    <ul class="list-disc pl-5 space-y-1 font-mono text-sm">
+                        <li><span class="text-custom-primary">nullgridslabs.dpdns.org</span> — Main organization website</li>
+                        <li><span class="text-custom-primary">blackcipher.nullgridslabs.dpdns.org</span> — CTF competition platform</li>
+                    </ul>
+                    <p class="mt-3 text-sm">Third-party services, social media accounts, or infrastructure not directly operated by NULLGRIDS Labs are out of scope.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-4">2. How to Report</h2>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <span class="step-number">1</span>
+                            <p><strong class="text-white">Document your findings</strong> — Include vulnerability type, affected URL/endpoint, steps to reproduce, and potential impact. Screenshots or PoC code are welcome but not required.</p>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <span class="step-number">2</span>
+                            <p><strong class="text-white">Send an email</strong> to <a href="mailto:nullgridslabs@gmail.com" class="text-custom-primary hover:text-white transition-colors">nullgridslabs@gmail.com</a> with the subject line: <span class="font-mono text-custom-primaryGlow">[VULNERABILITY REPORT]</span></p>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <span class="step-number">3</span>
+                            <p><strong class="text-white">Allow us time to respond</strong> — We will acknowledge your report within <strong class="text-white">72 hours</strong> and aim to resolve confirmed vulnerabilities within <strong class="text-white">14 days</strong> depending on severity.</p>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <span class="step-number">4</span>
+                            <p><strong class="text-white">Coordinate disclosure</strong> — Please refrain from public disclosure until we have patched the issue and given you the green light, or until 30 days have passed since your initial report.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">3. What We Ask of You</h2>
+                    <ul class="list-disc pl-5 space-y-1 font-mono text-sm">
+                        <li>Do not access, modify, or delete data that is not yours.</li>
+                        <li>Do not perform DoS/DDoS attacks against our infrastructure.</li>
+                        <li>Do not exploit the vulnerability beyond what is necessary to demonstrate it.</li>
+                        <li>Do not use social engineering or phishing tactics against NULLGRIDS team members.</li>
+                        <li>Act in good faith and with the intent to improve security.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">4. What We Offer</h2>
+                    <p>Researchers who responsibly disclose valid vulnerabilities will receive:</p>
+                    <ul class="list-disc pl-5 mt-2 space-y-1 font-mono text-sm">
+                        <li>A written acknowledgement of receipt within 72 hours.</li>
+                        <li>Credit in our public Hall of Thanks (with your permission).</li>
+                        <li>A coordinated disclosure timeline that respects your research.</li>
+                    </ul>
+                    <p class="mt-3 text-sm">Note: NULLGRIDS Labs is a student-led non-profit initiative. We do not currently offer monetary bug bounties, but we are deeply grateful for ethical research contributions.</p>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-3">5. Legal Safe Harbor</h2>
+                    <p>NULLGRIDS Labs will not pursue legal action against researchers who discover and report vulnerabilities in good faith in accordance with this policy. We consider good-faith security research conducted under this policy to be authorized and beneficial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 relative z-10 border-t border-custom-primary/20 bg-custom-bg">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-custom-gray text-sm mb-4">
+                &copy; 2026 NULLGRIDS Labs. Building Practical Cybersecurity Ecosystems for the Next Generation.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-xs text-custom-gray font-tech uppercase tracking-widest">
+                <a href="privacy-policy.html" class="hover:text-custom-primary transition-colors">Privacy Policy</a>
+                <a href="terms-of-service.html" class="hover:text-custom-primary transition-colors">Terms of Service</a>
+                <a href="security-policy.html" class="hover:text-custom-primary transition-colors">Security Policy</a>
+                <a href="cookie-policy.html" class="hover:text-custom-primary transition-colors">Cookie Policy</a>
+                <a href="responsible-disclosure.html" class="text-custom-primary">Responsible Disclosure</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('mobile-menu-icon');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = 'ph ph-x';
+            } else {
+                menu.classList.add('hidden');
+                icon.className = 'ph ph-list';
+            }
+        });
+    </script>
+</body>
+</html>
