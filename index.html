@@ -1019,17 +1019,22 @@
                     </div>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="mailto:nullgridslabs@gmail.com?subject=Contributor Registration" class="px-6 py-3 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nullgridslabs@gmail.com&su=Contributor%20Registration" target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
                             <i class="ph-bold ph-user-plus"></i> Contributor Registration
                         </a>
-                        <a href="mailto:nullgridslabs@gmail.com?subject=Partnership Inquiry" class="px-6 py-3 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center gap-2">
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nullgridslabs@gmail.com&su=Partnership%20Inquiry" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest hover:bg-custom-primary/10 transition-colors flex items-center gap-2">
                             <i class="ph-bold ph-handshake"></i> Partnership Inquiry
                         </a>
                     </div>
                 </div>
 
                 <div class="glass-panel p-8 cyber-border reveal delay-100 bg-custom-surface">
-                    <form class="space-y-6" onsubmit="event.preventDefault();">
+                    <form action="https://formsubmit.co/nullgridslabs@gmail.com" method="POST" class="space-y-6">
+                        <!-- Redirect back to the site after submission -->
+                        <input type="hidden" name="_next" value="https://nullgridslabs.dpdns.org">
+                        <!-- Disable Captcha (optional, but cleaner UX) -->
+                        <input type="hidden" name="_captcha" value="false">
+
                         <div class="text-xs font-tech text-custom-primary tracking-widest border-b border-custom-primary/30 pb-2 mb-6 text-glow">
                             SECURE TRANSMISSION PROTOCOL
                         </div>
@@ -1037,17 +1042,17 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Designation (Name)</label>
-                                <input type="text" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm" placeholder="John Doe">
+                                <input type="text" name="name" required class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm" placeholder="John Doe">
                             </div>
                             <div>
                                 <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Return Address (Email)</label>
-                                <input type="email" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm" placeholder="john@example.com">
+                                <input type="email" name="email" required class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm" placeholder="john@example.com">
                             </div>
                         </div>
                         
                         <div>
                             <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Transmission Subject</label>
-                            <select class="w-full bg-custom-bg border border-custom-primary/30 text-custom-gray px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm appearance-none">
+                            <select name="_subject" class="w-full bg-custom-bg border border-custom-primary/30 text-custom-gray px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm appearance-none">
                                 <option>General Inquiry</option>
                                 <option>Join as Contributor</option>
                                 <option>Institutional Partnership</option>
@@ -1057,7 +1062,7 @@
 
                         <div>
                             <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Encrypted Payload (Message)</label>
-                            <textarea rows="4" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm resize-none" placeholder="Enter message data..."></textarea>
+                            <textarea name="message" required rows="4" class="w-full bg-custom-bg border border-custom-primary/30 text-white px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm resize-none" placeholder="Enter message data..."></textarea>
                         </div>
 
                         <button type="submit" class="w-full py-4 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all font-tech font-bold uppercase tracking-widest flex items-center justify-center gap-2 group shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_25px_rgba(168,85,247,0.5)]">
