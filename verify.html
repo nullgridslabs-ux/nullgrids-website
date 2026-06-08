@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Verification | NULLGRIDS LABS</title>
+    <style>
+        :root {
+            --primary-dark: #0a0a1a;
+            --primary-blue: #0f172a;
+            --primary-purple: #3b0764;
+            --accent-purple: #9333ea;
+            --accent-blue: #3b82f6;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(147, 51, 234, 0.3);
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--primary-dark);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(59, 7, 100, 0.4), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(15, 23, 42, 0.8), transparent 25%);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Cyberpunk Grid Background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                linear-gradient(rgba(147, 51, 234, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(147, 51, 234, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            padding: 1.5rem;
+            z-index: 1;
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(147, 51, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #fff, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .header h2 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.8rem 0;
+            color: #cbd5e1;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            border-radius: 10px;
+            color: white;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-purple);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-purple));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(147, 51, 234, 0.4);
+        }
+
+        #result-container {
+            margin-top: 2rem;
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verified-card {
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .invalid-card {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(34, 197, 94, 0.5);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+        }
+
+        .badge-error {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+        }
+
+        .profile-pic {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: #1e293b;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #94a3b8;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+            position: relative;
+        }
+        
+        .profile-pic::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .details {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.6rem;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #f8fafc;
+            font-size: 0.95rem;
+            text-align: right;
+        }
+
+        .active-status {
+            color: var(--success);
+            font-weight: 700;
+            text-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+        }
+
+        .founder-sig {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 1rem;
+        }
+
+        .reset-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #cbd5e1;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-purple);
+            opacity: 0.5;
+            box-shadow: 0 0 10px var(--accent-purple);
+            animation: scan 3s linear infinite;
+            display: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(147, 51, 234, 0.3);
+            border-top-color: var(--accent-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="glass-panel" id="main-panel">
+            <div class="scan-line" id="scan-line"></div>
+            
+            <div class="header">
+                <h1>NULLGRIDS LABS</h1>
+                <h2>MSME Registered Enterprise</h2>
+                <p>Where Protection and Knowledge Comes Together for Education</p>
+            </div>
+
+            <div id="form-container">
+                <div class="form-group">
+                    <label for="empId">Employee ID</label>
+                    <input type="text" id="empId" class="form-control" placeholder="e.g. NGL-FND-001" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="verCode">Verification Code (Optional)</label>
+                    <input type="text" id="verCode" class="form-control" placeholder="Enter secure code" autocomplete="off">
+                </div>
+
+                <button class="btn" onclick="verifyIdentity()">Verify Identity</button>
+            </div>
+
+            <div class="loading" id="loading-spinner">
+                <div class="spinner"></div>
+                <div style="color: #cbd5e1; font-family: monospace; letter-spacing: 2px; font-size: 0.9rem;">DECRYPTING RECORD...</div>
+            </div>
+
+            <div id="result-container">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Employee Database
+        const employees = {
+            "NGL-FND-001": {
+                name: "Syed Raihaan",
+                designation: "Founder & Proprietor / CTO",
+                department: "Founder",
+                issueDate: "01-01-2024" // Simulated
+            },
+            "NGL-CORE-002": {
+                name: "Harisakthi",
+                designation: "CEO",
+                department: "Executive Board",
+                issueDate: "15-01-2024"
+            },
+            "NGL-CORE-003": {
+                name: "Sheik Nifla",
+                designation: "CDCO",
+                department: "Executive Board",
+                issueDate: "15-01-2024"
+            },
+            "NGL-CORE-004": {
+                name: "Santha Kumar",
+                designation: "CMA",
+                department: "Executive Board",
+                issueDate: "15-01-2024"
+            },
+            "NGL-CORE-005": {
+                name: "Tamilselvan",
+                designation: "CFO",
+                department: "Executive Board",
+                issueDate: "15-01-2024"
+            },
+            "NGL-TECH-001": {
+                name: "Arumugapandi",
+                designation: "Technical Lead",
+                department: "Technical Team",
+                issueDate: "01-02-2024"
+            },
+            "NGL-MKT-001": {
+                name: "Priyan",
+                designation: "Digital Marketing Associate",
+                department: "Marketing Team",
+                issueDate: "01-02-2024"
+            },
+            "NGL-SPN-001": {
+                name: "Pradeesh",
+                designation: "Sponsor & Partner Relations Manager",
+                department: "Sponsorship Team",
+                issueDate: "01-02-2024"
+            },
+            "NGL-MKT-002": {
+                name: "Sashvini",
+                designation: "Digital Media Associate",
+                department: "Marketing Team",
+                issueDate: "15-02-2024"
+            }
+        };
+
+        function verifyIdentity() {
+            const empIdInput = document.getElementById('empId').value.trim().toUpperCase();
+            const formContainer = document.getElementById('form-container');
+            const resultContainer = document.getElementById('result-container');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const scanLine = document.getElementById('scan-line');
+
+            if (!empIdInput) {
+                alert("Please enter an Employee ID.");
+                return;
+            }
+
+            // UI transitions
+            formContainer.style.display = 'none';
+            scanLine.style.display = 'block';
+            loadingSpinner.style.display = 'block';
+            resultContainer.style.display = 'none';
+
+            // Simulate network/decryption delay for cool effect
+            setTimeout(() => {
+                loadingSpinner.style.display = 'none';
+                scanLine.style.display = 'none';
+                
+                const employee = employees[empIdInput];
+
+                if (employee) {
+                    showSuccess(empIdInput, employee);
+                } else {
+                    showError();
+                }
+                
+                resultContainer.style.display = 'block';
+            }, 1200);
+        }
+
+        function showSuccess(id, data) {
+            const resultContainer = document.getElementById('result-container');
+            
+            // Get initials for profile pic placeholder
+            const initials = data.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+
+            resultContainer.innerHTML = `
+                <div class="verified-card">
+                    <div class="status-badge badge-success">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        VERIFIED MEMBER
+                    </div>
+                    
+                    <div class="profile-pic">
+                        ${initials}
+                    </div>
+                    
+                    <h3 style="margin: 0 0 1.5rem 0; font-size: 1.4rem; color: #fff;">${data.name}</h3>
+                    
+                    <div class="details">
+                        <div class="detail-row">
+                            <span class="detail-label">Employee ID</span>
+                            <span class="detail-value" style="font-family: monospace;">${id}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Designation</span>
+                            <span class="detail-value">${data.designation}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department</span>
+                            <span class="detail-value">${data.department}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Issue Date</span>
+                            <span class="detail-value">${data.issueDate}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Status</span>
+                            <span class="detail-value active-status">ACTIVE</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Organization</span>
+                            <span class="detail-value">NULLGRIDS LABS</span>
+                        </div>
+                    </div>
+
+                    <div class="founder-sig">
+                        <strong>MSME Registered Enterprise</strong><br>
+                        Founder: Syed Raihaan
+                    </div>
+                    
+                    <button class="reset-btn" onclick="resetForm()">Verify Another ID</button>
+                </div>
+            `;
+        }
+
+        function showError() {
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.innerHTML = `
+                <div class="invalid-card">
+                    <div class="status-badge badge-error">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        RECORD NOT FOUND
+                    </div>
+                    
+                    <div style="margin: 2rem 0;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.8;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <p style="color: #f8fafc; font-size: 1.1rem; margin-top: 1rem;">This ID is not registered under NULLGRIDS LABS.</p>
+                        <p style="color: #94a3b8; font-size: 0.9rem;">Please check the ID and try again, or contact the administration.</p>
+                    </div>
+                    
+                    <button class="reset-btn" onclick="resetForm()">Try Again</button>
+                </div>
+            `;
+        }
+
+        function resetForm() {
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('empId').value = '';
+            document.getElementById('verCode').value = '';
+            document.getElementById('form-container').style.display = 'block';
+        }
+        
+        // Add Enter key support
+        document.getElementById('empId').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyIdentity();
+            }
+        });
+        document.getElementById('verCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyIdentity();
+            }
+        });
+    </script>
+</body>
+</html>
