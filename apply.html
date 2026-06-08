@@ -218,14 +218,14 @@
             <!-- Decorative line -->
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-custom-primary to-purple-600"></div>
 
-            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { showSuccessScreen(); }"></iframe>
-            <form action="https://formsubmit.co/nullgridslabs@gmail.com" method="POST" target="hidden_iframe" id="application-form" enctype="multipart/form-data" class="space-y-8">
+            <form action="https://formsubmit.co/nullgridslabs@gmail.com" method="POST" id="application-form" enctype="multipart/form-data" class="space-y-8">
                 <!-- Hidden inputs for FormSubmit -->
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="Application_ID" id="input-app-id">
                 <input type="hidden" name="_subject" id="input-subject">
                 <input type="hidden" name="_autoresponse" id="input-autoresponse">
+                <input type="hidden" name="_next" id="input-next">
                 
                 <!-- We will append _subject and _autoresponse via JS -->
 
@@ -334,12 +334,12 @@
                             <div class="p-4 border border-custom-primary/30 rounded-lg bg-black/20">
                                 <label class="cyber-label">Resume Upload <span class="required">*</span></label>
                                 <p class="text-xs text-custom-gray mb-3">Accepted: PDF, DOCX (Max 10MB)</p>
-                                <input type="file" name="Resume" accept=".pdf,.doc,.docx" required class="w-full text-sm text-custom-gray" title="Upload Your Resume">
+                                <input type="file" name="resume" accept=".pdf,.doc,.docx" required class="w-full text-sm text-custom-gray" title="Upload Your Resume">
                             </div>
                             <div class="p-4 border border-custom-primary/30 rounded-lg bg-black/20">
                                 <label class="cyber-label">Cover Letter (Optional)</label>
                                 <p class="text-xs text-custom-gray mb-3">Accepted: PDF, DOCX (Max 10MB)</p>
-                                <input type="file" name="Cover Letter" accept=".pdf,.doc,.docx" class="w-full text-sm text-custom-gray" title="Upload Cover Letter">
+                                <input type="file" name="cover_letter" accept=".pdf,.doc,.docx" class="w-full text-sm text-custom-gray" title="Upload Cover Letter">
                             </div>
                         </div>
                     </div>
@@ -437,10 +437,23 @@
 
     <!-- Script to handle form submission -->
     <script>
-        let submitted = false;
+        // Check URL for success parameters on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'true') {
+                const appId = urlParams.get('appId') || 'NGL-APP-XXXX';
+                const team = urlParams.get('team') || 'Unknown Team';
+                const date = urlParams.get('date') || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                
+                showSuccessScreen(appId, team, date);
+                
+                // Clean the URL so it doesn't show the parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
 
         document.getElementById('application-form').addEventListener('submit', function(e) {
-            // We DO NOT preventDefault() because we need native form submission to handle file uploads via the hidden iframe
+            // We DO NOT preventDefault() because we need standard native form submission for reliable file uploads
             
             const submitBtn = document.getElementById('submit-btn');
             const btnText = document.getElementById('btn-text');
@@ -459,15 +472,15 @@
             const team = document.getElementById('team-select').value;
             const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-            // Store globally for success screen
-            window.currentAppId = appId;
-            window.currentTeam = team;
-            window.currentDate = date;
-
             // Prepare Data for FormSubmit
             document.getElementById('input-app-id').value = appId;
             document.getElementById('input-subject').value = "New Application Received: " + appId + " [" + team + "]";
             
+            // Set _next redirect URL back to this page with success parameters
+            const currentUrl = window.location.href.split('?')[0];
+            const nextUrl = currentUrl + "?success=true&appId=" + encodeURIComponent(appId) + "&team=" + encodeURIComponent(team) + "&date=" + encodeURIComponent(date);
+            document.getElementById('input-next').value = nextUrl;
+
             // Autoresponse email content for the applicant
             const autoResponse = "Thank you for applying to NULLGRIDS LABS.\n\n" +
                                  "We have successfully received your application. Below are your details:\n\n" +
@@ -479,15 +492,14 @@
                                  "Regards,\nNULLGRIDS LABS Recruitment Team";
             document.getElementById('input-autoresponse').value = autoResponse;
 
-            submitted = true;
-            // Form continues to submit natively to the hidden iframe
+            // Form continues to submit natively via standard POST, which perfectly supports attachments
         });
 
-        function showSuccessScreen() {
-            // Update UI with generated info
-            document.getElementById('app-id-display').innerText = window.currentAppId;
-            document.getElementById('success-team').innerText = window.currentTeam;
-            document.getElementById('success-date').innerText = window.currentDate;
+        function showSuccessScreen(appId, team, date) {
+            // Update UI with info
+            document.getElementById('app-id-display').innerText = appId;
+            document.getElementById('success-team').innerText = team;
+            document.getElementById('success-date').innerText = date;
 
             // Hide Form, Show Success
             document.getElementById('form-container').style.display = 'none';
