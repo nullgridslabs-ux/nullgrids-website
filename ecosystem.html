@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Ecosystem | NULLGRIDS LABS</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.3"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        custom: {
+                            bg: '#05050A',
+                            surface: '#0D0F18',
+                            primary: '#A855F7',
+                            primaryGlow: '#D8B4FE',
+                            blue: '#3B82F6',
+                            cyan: '#06B6D4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #05050A;
+            color: #FFFFFF;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Cyber Grid Background */
+        .cyber-grid {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            transform-origin: center;
+            animation: rotateGrid 120s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGrid {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particles */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Map Container */
+        #map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
+            cursor: grab;
+            overflow: hidden;
+        }
+        
+        #map-container:active {
+            cursor: grabbing;
+        }
+
+        #map-workspace {
+            position: absolute;
+            width: 4000px;
+            height: 4000px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            transform-origin: center;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* SVG Lines */
+        #connection-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 11;
+            pointer-events: none;
+        }
+
+        .connection-line {
+            stroke: rgba(168, 85, 247, 0.4);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 5, 5;
+            animation: dash 30s linear infinite;
+        }
+
+        .connection-line.glow {
+            stroke: rgba(6, 182, 212, 0.6);
+            stroke-width: 3;
+            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.8));
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        /* Nodes */
+        .node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .node:hover {
+            z-index: 30;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .glass-panel {
+            background: rgba(13, 15, 24, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(168, 85, 247, 0.1);
+            padding: 1.5rem;
+            color: white;
+            min-width: 250px;
+        }
+
+        .center-node .glass-panel {
+            background: rgba(20, 10, 40, 0.9);
+            border: 2px solid var(--custom-cyan);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.4), inset 0 0 30px rgba(168, 85, 247, 0.4);
+            min-width: 350px;
+            text-align: center;
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.3), inset 0 0 20px rgba(168, 85, 247, 0.3); }
+            100% { box-shadow: 0 0 60px rgba(6, 182, 212, 0.6), inset 0 0 40px rgba(168, 85, 247, 0.6); }
+        }
+
+        .node-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .center-node .node-title {
+            font-size: 1.8rem;
+            color: var(--custom-cyan);
+            border-bottom-color: rgba(6, 182, 212, 0.3);
+            justify-content: center;
+        }
+
+        .node-content {
+            font-size: 0.9rem;
+            color: #A1A1AA;
+        }
+        
+        .node-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .node-list li {
+            margin-bottom: 0.4rem;
+            padding-left: 1.2rem;
+            position: relative;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .node-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--custom-primary);
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .node-highlight {
+            color: var(--custom-primaryGlow);
+            font-weight: 600;
+        }
+
+        .node-icon {
+            font-size: 1.5rem;
+            color: var(--custom-primary);
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: rgba(13, 15, 24, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .control-btn:hover {
+            background: rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Header Return */
+        .return-nav {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+    <div id="particles-js"></div>
+
+    <div class="return-nav">
+        <a href="index.html" class="inline-flex items-center gap-2 px-4 py-2 bg-custom-surface/80 backdrop-blur border border-custom-primary/30 text-white font-tech uppercase tracking-widest text-sm rounded hover:bg-custom-primary/20 transition-all shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+            <i class="ph-bold ph-arrow-left"></i> Return Home
+        </a>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" id="btn-zoom-in" title="Zoom In"><i class="ph-bold ph-magnifying-glass-plus"></i></button>
+        <button class="control-btn" id="btn-zoom-out" title="Zoom Out"><i class="ph-bold ph-magnifying-glass-minus"></i></button>
+        <button class="control-btn" id="btn-reset" title="Reset View"><i class="ph-bold ph-corners-out"></i></button>
+    </div>
+
+    <div id="map-container">
+        <div id="map-workspace">
+            <svg id="connection-lines"></svg>
+            
+            <!-- Nodes will be injected here via JS -->
+            
+        </div>
+    </div>
+
+    <!-- Particles.js for Cyber effect -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#A855F7", "#3B82F6", "#06B6D4"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#A855F7",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 140, "line_linked": { "opacity": 0.5 } }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+
+    <script>
+        // Ecosystem Data Structure
+        const ecosystemData = {
+            center: {
+                id: 'center',
+                title: 'NULLGRIDS LABS',
+                icon: 'ph-shield-check',
+                content: `
+                    <div class="text-sm text-custom-primaryGlow italic mb-4 font-tech">Where Protection and Knowledge Comes Together for Education</div>
+                    <div class="inline-block px-3 py-1 bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs rounded mb-4 font-tech uppercase">MSME Registered Enterprise</div>
+                    <div class="text-left text-xs space-y-2 border-t border-white/10 pt-3">
+                        <div class="flex justify-between"><span class="text-custom-gray">Registration:</span> <span class="font-mono text-white">UDYAM-TN-03-0328657</span></div>
+                        <div class="flex justify-between"><span class="text-custom-gray">Founder:</span> <span class="font-bold text-white">Syed Raihaan</span></div>
+                    </div>
+                `,
+                isCenter: true
+            },
+            nodes: [
+                {
+                    id: 'node-1',
+                    title: 'LEADERSHIP',
+                    icon: 'ph-users-three',
+                    content: `
+                        <div class="text-xs text-custom-primary mb-3 font-tech uppercase tracking-widest border-b border-custom-primary/20 pb-1">Executive Board Cluster</div>
+                        <ul class="node-list">
+                            <li><span class="text-white font-semibold">Syed Raihaan</span> <br><span class="text-[10px] text-custom-gray">Founder & Proprietor / CTO</span></li>
+                            <li><span class="text-white font-semibold">Harisakthi</span> <br><span class="text-[10px] text-custom-gray">CEO</span></li>
+                            <li><span class="text-white font-semibold">Sheik Nifla</span> <br><span class="text-[10px] text-custom-gray">CDCO</span></li>
+                            <li><span class="text-white font-semibold">Santha Kumar</span> <br><span class="text-[10px] text-custom-gray">CMA</span></li>
+                            <li><span class="text-white font-semibold">Tamilselvan</span> <br><span class="text-[10px] text-custom-gray">CFO</span></li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'node-2',
+                    title: 'TECHNICAL DIVISION',
+                    icon: 'ph-terminal-window',
+                    content: `
+                        <div class="flex gap-2 mb-3 text-custom-cyan text-xl">
+                            <i class="ph ph-hard-drives"></i> <i class="ph ph-graph"></i> <i class="ph ph-code"></i>
+                        </div>
+                        <ul class="node-list mb-3">
+                            <li>Technical Team</li>
+                            <li>Testing Team</li>
+                            <li>Research Team</li>
+                            <li>Cybersecurity Operations</li>
+                        </ul>
+                        <div class="mt-3 pt-3 border-t border-white/10 text-xs">
+                            <span class="text-custom-gray">Technical Lead:</span> <span class="text-white font-semibold">Arumugapandi</span>
+                        </div>
+                    `
+                },
+                {
+                    id: 'node-3',
+                    title: 'BUSINESS & OPERATIONS',
+                    icon: 'ph-chart-line-up',
+                    content: `
+                        <div class="flex gap-2 mb-3 text-custom-primaryGlow text-xl">
+                            <i class="ph ph-briefcase"></i> <i class="ph ph-presentation-chart"></i> <i class="ph ph-tree-structure"></i>
+                        </div>
+                        <ul class="node-list">
+                            <li>Operations Team</li>
+                            <li>Finance Team</li>
+                            <li>Documentation & Compliance</li>
+                            <li>Sponsorship Team</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'node-4',
+                    title: 'MARKETING & OUTREACH',
+                    icon: 'ph-megaphone',
+                    content: `
+                        <div class="flex gap-2 mb-3 text-pink-400 text-xl">
+                            <i class="ph ph-globe-hemisphere-west"></i> <i class="ph ph-share-network"></i>
+                        </div>
+                        <ul class="node-list mb-3">
+                            <li>Outreach Team</li>
+                            <li>Community Team</li>
+                        </ul>
+                        <div class="mt-3 pt-3 border-t border-white/10 text-xs space-y-1">
+                            <div><span class="text-white font-semibold">Priyan</span> <span class="text-custom-gray">- Digital Mktg</span></div>
+                            <div><span class="text-white font-semibold">Sashvini</span> <span class="text-custom-gray">- Digital Media</span></div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'node-5',
+                    title: 'PARTNERSHIPS',
+                    icon: 'ph-handshake',
+                    content: `
+                        <ul class="node-list mb-3">
+                            <li class="node-highlight">Educational Institutions</li>
+                            <li class="node-highlight">Industry Partners</li>
+                            <li>Sponsors</li>
+                        </ul>
+                        <div class="mt-3 pt-3 border-t border-white/10 text-xs">
+                            <span class="text-custom-gray">Partner Relations Mgr:</span> <br><span class="text-white font-semibold">Pradeesh</span>
+                        </div>
+                    `
+                },
+                {
+                    id: 'node-6',
+                    title: 'INTERNSHIP PROGRAM',
+                    icon: 'ph-student',
+                    content: `
+                        <div class="inline-block px-2 py-1 bg-green-500/10 border border-green-500/30 text-green-400 text-[10px] rounded mb-3 font-tech uppercase tracking-widest">FREE Internship Program</div>
+                        <div class="grid grid-cols-2 gap-x-2 text-[10px] mb-4 text-custom-gray">
+                            <div>> Technical Interns</div>
+                            <div>> Testing Interns</div>
+                            <div>> Documentation</div>
+                            <div>> Operations</div>
+                            <div>> Marketing</div>
+                            <div>> Research</div>
+                        </div>
+                        <a href="apply.html" class="block w-full py-2 bg-custom-primary text-white text-center rounded text-xs font-tech font-bold uppercase tracking-widest hover:bg-purple-400 transition-colors">Apply Now</a>
+                    `
+                },
+                {
+                    id: 'node-7',
+                    title: 'BLACK CIPHER',
+                    icon: 'ph-target',
+                    content: `
+                        <div class="text-xs text-red-400 mb-2 font-tech uppercase tracking-widest flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span> Flagship Initiative
+                        </div>
+                        <div class="text-sm text-white font-bold mb-3 leading-tight">National Cyber Warfare Championship</div>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[9px] text-custom-gray">Competition Arena</span>
+                            <span class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[9px] text-custom-gray">CTF</span>
+                            <span class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[9px] text-custom-gray">Blue Team</span>
+                            <span class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-[9px] text-custom-gray">Red Team</span>
+                        </div>
+                    `
+                },
+                {
+                    id: 'node-8',
+                    title: 'MSME REGISTRATION',
+                    icon: 'ph-bank',
+                    content: `
+                        <div class="flex items-center gap-2 mb-3 text-custom-gold">
+                            <i class="ph-fill ph-seal-check text-2xl"></i>
+                            <div class="text-[10px] uppercase font-tech leading-tight text-white">Government of India<br>Registered Enterprise</div>
+                        </div>
+                        <div class="text-xs space-y-1 bg-black/30 p-2 rounded border border-white/5">
+                            <div class="text-[10px] text-custom-gray">Reg Number:</div>
+                            <div class="font-mono text-custom-gold font-bold">UDYAM-TN-03-0328657</div>
+                            <div class="flex justify-between mt-1 pt-1 border-t border-white/10">
+                                <span>Status: <span class="text-green-400">Active</span></span>
+                                <span>TN, CBE</span>
+                            </div>
+                        </div>
+                    `
+                },
+                {
+                    id: 'node-9',
+                    title: 'VISION 2030',
+                    icon: 'ph-rocket-launch',
+                    content: `
+                        <div class="text-xs text-custom-cyan mb-3 font-tech uppercase tracking-widest border-b border-custom-cyan/30 pb-1">Future Roadmap</div>
+                        <ul class="node-list text-xs">
+                            <li>Cybersecurity Education</li>
+                            <li>Research Labs</li>
+                            <li>National Competitions</li>
+                            <li>School Security Programs</li>
+                            <li>Industry Training</li>
+                            <li>Digital Innovation</li>
+                        </ul>
+                    `
+                }
+            ]
+        };
+
+        const workspace = document.getElementById('map-workspace');
+        const svgLines = document.getElementById('connection-lines');
+        
+        // Center position in the workspace
+        const centerX = 2000;
+        const centerY = 2000;
+        const radius = 600; // Distance of nodes from center
+
+        function renderEcosystem() {
+            // Render Center Node
+            const centerHtml = `
+                <div class="node center-node" id="${ecosystemData.center.id}" style="left: ${centerX}px; top: ${centerY}px;">
+                    <div class="glass-panel">
+                        <div class="node-title"><i class="ph-bold ${ecosystemData.center.icon}"></i> ${ecosystemData.center.title}</div>
+                        <div class="node-content">${ecosystemData.center.content}</div>
+                    </div>
+                </div>
+            `;
+            workspace.insertAdjacentHTML('beforeend', centerHtml);
+
+            // Render Branches
+            const totalNodes = ecosystemData.nodes.length;
+            let svgContent = '';
+
+            ecosystemData.nodes.forEach((node, index) => {
+                // Calculate position on a circle
+                const angle = (index / totalNodes) * (2 * Math.PI) - (Math.PI / 2); // Start at top
+                const nodeX = centerX + radius * Math.cos(angle);
+                const nodeY = centerY + radius * Math.sin(angle);
+
+                // Add HTML Node
+                const nodeHtml = `
+                    <div class="node" id="${node.id}" style="left: ${nodeX}px; top: ${nodeY}px;">
+                        <div class="glass-panel">
+                            <div class="node-title"><i class="ph-bold ${node.icon}"></i> ${node.title}</div>
+                            <div class="node-content">${node.content}</div>
+                        </div>
+                    </div>
+                `;
+                workspace.insertAdjacentHTML('beforeend', nodeHtml);
+
+                // Add SVG Line
+                svgContent += `<line x1="${centerX}" y1="${centerY}" x2="${nodeX}" y2="${nodeY}" class="connection-line" id="line-${node.id}" />`;
+            });
+
+            svgLines.innerHTML = svgContent;
+
+            // Add interactivity
+            document.querySelectorAll('.node').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    const id = el.id;
+                    if(id !== 'center') {
+                        const line = document.getElementById('line-' + id);
+                        if(line) line.classList.add('glow');
+                    } else {
+                        document.querySelectorAll('.connection-line').forEach(l => l.classList.add('glow'));
+                    }
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.connection-line').forEach(l => l.classList.remove('glow'));
+                });
+            });
+        }
+
+        renderEcosystem();
+
+        // Pan and Zoom Logic
+        const container = document.getElementById('map-container');
+        let scale = 0.8; // Initial scale to see everything nicely
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
+
+        function updateTransform() {
+            // Keep the workspace centered but adjust translation based on drag
+            workspace.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
+        }
+
+        // Initialize view
+        updateTransform();
+
+        // Mouse Drag Panning
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
+            updateTransform();
+        });
+
+        // Touch Panning
+        container.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            }
+        }, {passive: false});
+
+        window.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            e.preventDefault();
+            translateX = e.touches[0].clientX - startX;
+            translateY = e.touches[0].clientY - startY;
+            updateTransform();
+        }, {passive: false});
+
+        // Scroll Zoom
+        container.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomSpeed = 0.05;
+            if (e.deltaY < 0) {
+                scale = Math.min(scale + zoomSpeed, 2);
+            } else {
+                scale = Math.max(scale - zoomSpeed, 0.3);
+            }
+            updateTransform();
+        });
+
+        // Button Controls
+        document.getElementById('btn-zoom-in').addEventListener('click', () => {
+            scale = Math.min(scale + 0.1, 2);
+            updateTransform();
+        });
+
+        document.getElementById('btn-zoom-out').addEventListener('click', () => {
+            scale = Math.max(scale - 0.1, 0.3);
+            updateTransform();
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            scale = 0.8;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        });
+    </script>
+</body>
+</html>

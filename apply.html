@@ -213,301 +213,34 @@
             <p class="text-custom-gray font-tech tracking-wider text-lg">APPLICATION FORM // CLASSIFIED INTAKE</p>
         </div>
 
-        <!-- Main Form Container -->
-        <div id="form-container" class="glass-panel p-6 sm:p-10 relative overflow-hidden">
+        <!-- Main Form Container (Now Closed) -->
+        <div id="form-container" class="glass-panel p-10 text-center relative overflow-hidden">
             <!-- Decorative line -->
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-custom-primary to-purple-600"></div>
 
-            <form action="https://formsubmit.co/nullgridslabs@gmail.com" method="POST" id="application-form" enctype="multipart/form-data" class="space-y-8">
-                <!-- Hidden inputs for FormSubmit -->
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="Application_ID" id="input-app-id">
-                <input type="hidden" name="_subject" id="input-subject">
-                <input type="hidden" name="_autoresponse" id="input-autoresponse">
-                <input type="hidden" name="_next" id="input-next">
-                
-                <!-- We will append _subject and _autoresponse via JS -->
-
-                <!-- 1. Personal Information -->
-                <div>
-                    <h3 class="text-xl font-tech font-bold text-white border-b border-custom-primary/30 pb-2 mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <i class="ph ph-user text-custom-primary"></i> Personal Identification
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="cyber-label">Full Name <span class="required">*</span></label>
-                            <input type="text" name="Full Name" required class="cyber-input" placeholder="John Doe">
-                        </div>
-                        <div>
-                            <label class="cyber-label">Email Address <span class="required">*</span></label>
-                            <input type="email" name="Email" required class="cyber-input" placeholder="john@example.com">
-                        </div>
-                        <div>
-                            <label class="cyber-label">Phone Number <span class="required">*</span></label>
-                            <input type="tel" name="Phone Number" required class="cyber-input" placeholder="+91 98765 43210">
-                        </div>
-                        <div>
-                            <label class="cyber-label">Current Location <span class="required">*</span></label>
-                            <input type="text" name="Current Location" required class="cyber-input" placeholder="City, State, Country">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. Academic Information -->
-                <div>
-                    <h3 class="text-xl font-tech font-bold text-white border-b border-custom-primary/30 pb-2 mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <i class="ph ph-graduation-cap text-custom-primary"></i> Academic Profile
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="md:col-span-2">
-                            <label class="cyber-label">College / University <span class="required">*</span></label>
-                            <input type="text" name="College/University" required class="cyber-input" placeholder="Institution Name">
-                        </div>
-                        <div>
-                            <label class="cyber-label">Degree / Course <span class="required">*</span></label>
-                            <input type="text" name="Degree/Course" required class="cyber-input" placeholder="e.g. B.Tech Computer Science">
-                        </div>
-                        <div>
-                            <label class="cyber-label">Year of Study <span class="required">*</span></label>
-                            <select name="Year of Study" required class="cyber-input">
-                                <option value="" disabled selected>Select Year</option>
-                                <option value="1st Year">1st Year</option>
-                                <option value="2nd Year">2nd Year</option>
-                                <option value="3rd Year">3rd Year</option>
-                                <option value="4th Year">4th Year</option>
-                                <option value="Graduated">Graduated</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. Professional Profiles -->
-                <div>
-                    <h3 class="text-xl font-tech font-bold text-white border-b border-custom-primary/30 pb-2 mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <i class="ph ph-link text-custom-primary"></i> Digital Footprint
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="cyber-label">LinkedIn Profile URL <span class="required">*</span></label>
-                            <input type="url" name="LinkedIn" required class="cyber-input" placeholder="https://linkedin.com/in/...">
-                        </div>
-                        <div>
-                            <label class="cyber-label">GitHub Profile URL (Optional)</label>
-                            <input type="url" name="GitHub" class="cyber-input" placeholder="https://github.com/...">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="cyber-label">Portfolio / Personal Website (Optional)</label>
-                            <input type="url" name="Portfolio" class="cyber-input" placeholder="https://yourwebsite.com">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Team Selection & Documents -->
-                <div>
-                    <h3 class="text-xl font-tech font-bold text-white border-b border-custom-primary/30 pb-2 mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <i class="ph ph-briefcase text-custom-primary"></i> Placement & Documentation
-                    </h3>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <label class="cyber-label">Preferred Team <span class="required">*</span></label>
-                            <select name="Preferred Team" id="team-select" required class="cyber-input">
-                                <option value="" disabled selected>Select a Division</option>
-                                <option value="Technical Team">Technical Team</option>
-                                <option value="Testing Team">Testing Team</option>
-                                <option value="Documentation & Compliance Team">Documentation & Compliance Team</option>
-                                <option value="Sponsorship Team">Sponsorship Team</option>
-                                <option value="Outreach Team">Outreach Team</option>
-                                <option value="Operations Team">Operations Team</option>
-                                <option value="Finance Team">Finance Team</option>
-                                <option value="Marketing Team">Marketing Team</option>
-                                <option value="Research Team">Research Team</option>
-                            </select>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="p-4 border border-custom-primary/30 rounded-lg bg-black/20">
-                                <label class="cyber-label">Resume Upload <span class="required">*</span></label>
-                                <p class="text-xs text-custom-gray mb-3">Accepted: PDF, DOCX (Max 10MB)</p>
-                                <input type="file" name="resume" accept=".pdf,.doc,.docx" required class="w-full text-sm text-custom-gray" title="Upload Your Resume">
-                            </div>
-                            <div class="p-4 border border-custom-primary/30 rounded-lg bg-black/20">
-                                <label class="cyber-label">Cover Letter (Optional)</label>
-                                <p class="text-xs text-custom-gray mb-3">Accepted: PDF, DOCX (Max 10MB)</p>
-                                <input type="file" name="cover_letter" accept=".pdf,.doc,.docx" class="w-full text-sm text-custom-gray" title="Upload Cover Letter">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. Questionnaires -->
-                <div>
-                    <h3 class="text-xl font-tech font-bold text-white border-b border-custom-primary/30 pb-2 mb-6 uppercase tracking-widest flex items-center gap-2">
-                        <i class="ph ph-terminal-window text-custom-primary"></i> Competency Assessment
-                    </h3>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <label class="cyber-label">Why Do You Want To Join NULLGRIDS? <span class="required">*</span></label>
-                            <textarea name="Why Join NULLGRIDS" required rows="4" class="cyber-input resize-none" placeholder="Elaborate on your motivation and objectives..."></textarea>
-                        </div>
-                        <div>
-                            <label class="cyber-label">Describe Your Skills <span class="required">*</span></label>
-                            <textarea name="Skills" required rows="4" class="cyber-input resize-none" placeholder="List your technical and non-technical proficiencies..."></textarea>
-                        </div>
-                        <div>
-                            <label class="cyber-label">Have You Participated In Any Cybersecurity Activities? <span class="required">*</span></label>
-                            <p class="text-xs text-custom-gray mb-2">Examples: CTFs, Hackathons, Research Projects, Bug Hunting, Security Labs, Technical Events.</p>
-                            <textarea name="Cybersecurity Activities" required rows="4" class="cyber-input resize-none" placeholder="Detail your previous exposure..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 6. Declaration -->
-                <div class="pt-4 border-t border-custom-primary/30">
-                    <label class="flex items-start gap-3 cursor-pointer group">
-                        <input type="checkbox" required class="cyber-checkbox mt-1">
-                        <span class="text-sm text-custom-gray group-hover:text-white transition-colors">
-                            <span class="text-custom-primary font-bold">DECLARATION:</span> I confirm that the information provided is accurate and complete. I understand that any misrepresentation may result in disqualification from the selection process.
-                        </span>
-                    </label>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" id="submit-btn" class="cyber-button flex justify-center items-center gap-2">
-                    <span id="btn-text">Submit Application</span>
-                    <i id="btn-icon" class="ph-bold ph-paper-plane-tilt text-xl"></i>
-                    
-                    <!-- Loading spinner (hidden by default) -->
-                    <svg id="btn-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                </button>
-            </form>
-        </div>
-
-        <!-- Success Screen (Hidden by Default) -->
-        <div id="success-screen" class="glass-panel p-10 text-center relative overflow-hidden mt-10">
-            <div class="absolute inset-0 bg-green-500/5 z-0 pointer-events-none"></div>
+            <div class="w-20 h-20 bg-custom-primary/10 border border-custom-primary/30 rounded-full flex items-center justify-center text-custom-primary mx-auto mb-6 shadow-[0_0_30px_rgba(168,85,247,0.2)]">
+                <i class="ph-bold ph-lock-key text-4xl"></i>
+            </div>
             
-            <div class="relative z-10 flex flex-col items-center">
-                <div class="w-20 h-20 bg-green-500/20 border border-green-500 rounded-full flex items-center justify-center text-green-400 mb-6 shadow-[0_0_30px_rgba(34,197,94,0.3)]">
-                    <i class="ph-bold ph-check text-4xl"></i>
-                </div>
+            <h2 class="text-3xl font-tech font-bold text-white tracking-widest mb-4 uppercase">INTAKE CLOSED</h2>
+            <p class="text-custom-gray max-w-lg mx-auto mb-8 text-lg">
+                The current internship recruitment window is temporarily closed. Thank you for your interest in joining the NULLGRIDS ecosystem.
+            </p>
+            
+            <div class="p-6 border border-custom-primary/20 bg-black/30 rounded-lg mb-8 max-w-md mx-auto">
+                <h3 class="text-white font-tech font-bold tracking-widest uppercase mb-2">Have Questions?</h3>
+                <p class="text-sm text-custom-gray mb-6">For general queries or to express interest in future opportunities, please reach out to our communications division directly via email.</p>
                 
-                <h2 class="text-3xl font-tech font-bold text-white tracking-widest mb-2 uppercase">APPLICATION RECEIVED</h2>
-                <p class="text-custom-gray mb-8">Thank you for applying to NULLGRIDS LABS.</p>
-                
-                <div class="bg-black/40 border border-custom-primary/40 rounded-lg p-6 w-full max-w-md mb-8 shadow-[inset_0_0_20px_rgba(168,85,247,0.1)]">
-                    <div class="text-xs font-tech text-custom-primaryGlow uppercase tracking-widest mb-1">Your Application ID</div>
-                    <div id="app-id-display" class="text-3xl font-mono font-bold text-white tracking-wider text-glow mb-4">NGL-APP-XXXX</div>
-                    
-                    <div class="border-t border-custom-primary/20 pt-4 text-left space-y-2">
-                        <div class="flex justify-between">
-                            <span class="text-xs text-custom-gray uppercase">Applied Team:</span>
-                            <span id="success-team" class="text-sm text-white font-medium">Technical Team</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-xs text-custom-gray uppercase">Submission Date:</span>
-                            <span id="success-date" class="text-sm text-white font-medium">--</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="text-sm text-custom-gray max-w-lg mx-auto mb-6 leading-relaxed">
-                    Our recruitment team will review your application and contact you within <strong>24-72 hours</strong>.
-                    <br><br>
-                    <span class="text-custom-primaryGlow block mt-2 px-4 py-2 border border-custom-primary/30 rounded bg-custom-primary/10">
-                        <i class="ph-fill ph-envelope-simple mr-1"></i> A confirmation email containing your timeline and details has been automatically dispatched to your inbox.
-                    </span>
-                </p>
-
-                <a href="index.html" class="inline-flex items-center gap-2 text-custom-primary hover:text-white font-tech uppercase tracking-widest transition-colors border-b border-transparent hover:border-white pb-1">
-                    <i class="ph-bold ph-arrow-left"></i> Return to Headquarters
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nullgridslabs@gmail.com" target="_blank" class="cyber-button flex justify-center items-center gap-2">
+                    <span>Email Headquarters</span>
+                    <i class="ph-bold ph-envelope-simple text-xl"></i>
                 </a>
             </div>
+
+            <a href="index.html" class="inline-flex items-center gap-2 text-custom-primary hover:text-white font-tech uppercase tracking-widest transition-colors border-b border-transparent hover:border-white pb-1">
+                <i class="ph-bold ph-arrow-left"></i> Return to Headquarters
+            </a>
         </div>
     </div>
-
-    <!-- Script to handle form submission -->
-    <script>
-        // Check URL for success parameters on page load
-        document.addEventListener("DOMContentLoaded", function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('success') === 'true') {
-                const appId = urlParams.get('appId') || 'NGL-APP-XXXX';
-                const team = urlParams.get('team') || 'Unknown Team';
-                const date = urlParams.get('date') || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-                
-                showSuccessScreen(appId, team, date);
-                
-                // Clean the URL so it doesn't show the parameters
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        });
-
-        document.getElementById('application-form').addEventListener('submit', function(e) {
-            // We DO NOT preventDefault() because we need standard native form submission for reliable file uploads
-            
-            const submitBtn = document.getElementById('submit-btn');
-            const btnText = document.getElementById('btn-text');
-            const btnIcon = document.getElementById('btn-icon');
-            const btnSpinner = document.getElementById('btn-spinner');
-            
-            // Set Loading State
-            submitBtn.disabled = true;
-            btnText.innerText = 'Transmitting Data...';
-            btnIcon.classList.add('hidden');
-            btnSpinner.classList.remove('hidden');
-
-            // Generate Application ID
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            const appId = "NGL-APP-" + randomNum;
-            const team = document.getElementById('team-select').value;
-            const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-
-            // Prepare Data for FormSubmit
-            document.getElementById('input-app-id').value = appId;
-            document.getElementById('input-subject').value = "New Application Received: " + appId + " [" + team + "]";
-            
-            // Set _next redirect URL back to this page with success parameters
-            const currentUrl = window.location.href.split('?')[0];
-            const nextUrl = currentUrl + "?success=true&appId=" + encodeURIComponent(appId) + "&team=" + encodeURIComponent(team) + "&date=" + encodeURIComponent(date);
-            document.getElementById('input-next').value = nextUrl;
-
-            // Autoresponse email content for the applicant
-            const autoResponse = "Thank you for applying to NULLGRIDS LABS.\n\n" +
-                                 "We have successfully received your application. Below are your details:\n\n" +
-                                 "Application ID: " + appId + "\n" +
-                                 "Applied Team: " + team + "\n" +
-                                 "Submission Date: " + date + "\n\n" +
-                                 "Recruitment Timeline: Our recruitment team will review your application and contact you within 24-72 hours regarding the next steps.\n\n" +
-                                 "If you have any questions, feel free to reply to this email.\n\n" +
-                                 "Regards,\nNULLGRIDS LABS Recruitment Team";
-            document.getElementById('input-autoresponse').value = autoResponse;
-
-            // Form continues to submit natively via standard POST, which perfectly supports attachments
-        });
-
-        function showSuccessScreen(appId, team, date) {
-            // Update UI with info
-            document.getElementById('app-id-display').innerText = appId;
-            document.getElementById('success-team').innerText = team;
-            document.getElementById('success-date').innerText = date;
-
-            // Hide Form, Show Success
-            document.getElementById('form-container').style.display = 'none';
-            document.getElementById('success-screen').style.display = 'block';
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
 </body>
 </html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSME Registration | NULLGRIDS LABS</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?v=3.4.3"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        tech: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        custom: {
+                            bg: '#0A0B10',
+                            surface: '#12141D',
+                            surfaceHover: '#1A1D2A',
+                            primary: '#3B82F6', // Trust Blue
+                            primaryGlow: '#60A5FA',
+                            gold: '#FBBF24', // Official Gold
+                            white: '#FFFFFF',
+                            gray: '#94A3B8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0A0B10;
+            color: #FFFFFF;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(251, 191, 36, 0.05), transparent 40%);
+        }
+
+        .glass-panel {
+            background: rgba(18, 20, 29, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.1);
+        }
+
+        .certificate-border {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .certificate-border::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px solid rgba(251, 191, 36, 0.3); /* Gold border */
+            border-radius: 12px;
+            pointer-events: none;
+            margin: 8px;
+        }
+
+        .certificate-border::after {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border: 1px solid rgba(59, 130, 246, 0.4); /* Blue outer */
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        .text-glow-blue {
+            text-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        }
+        
+        .text-glow-gold {
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+        }
+
+        .stamp-icon {
+            opacity: 0.1;
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            transform: rotate(-15deg);
+            font-size: 15rem;
+            color: var(--custom-gold);
+            pointer-events: none;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, rgba(18, 20, 29, 0.8), rgba(10, 11, 16, 0.9));
+            border-left: 3px solid var(--custom-primary);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateX(5px);
+            border-left-color: var(--custom-gold);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Header Navigation (Simple Return) -->
+    <nav class="w-full py-6 px-6 border-b border-custom-primary/20 bg-custom-bg/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="logo.jpeg" alt="NULLGRIDS Labs Logo" class="w-10 h-10 object-contain">
+                <span class="font-tech text-2xl font-bold tracking-widest text-white group-hover:text-custom-primaryGlow transition-colors">NULLGRIDS</span>
+            </a>
+            <a href="index.html" class="text-custom-gray hover:text-white font-tech uppercase tracking-widest text-sm flex items-center gap-2 transition-colors">
+                <i class="ph-bold ph-arrow-left"></i> Return Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-12 pb-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Hero Section -->
+            <div class="text-center mb-16 relative">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-custom-primary/10 border border-custom-primary/30 text-custom-primary mb-6 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+                    <i class="ph-fill ph-seal-check text-4xl"></i>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-tech font-bold text-white tracking-wider mb-4 uppercase">NULLGRIDS LABS</h1>
+                <h2 class="text-xl md:text-2xl font-tech font-semibold text-custom-primaryGlow tracking-widest uppercase mb-4 text-glow-blue">MSME Registered Enterprise</h2>
+                <div class="inline-flex items-center gap-2 px-4 py-2 border border-custom-gold/40 bg-custom-gold/10 text-custom-gold font-tech tracking-widest uppercase rounded text-sm text-glow-gold">
+                    <i class="ph-fill ph-bank"></i> Government of India Registered
+                </div>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 mb-16">
+                
+                <!-- Registration Details Card -->
+                <div class="lg:col-span-2">
+                    <div class="glass-panel certificate-border h-full overflow-hidden relative">
+                        <i class="ph-fill ph-certificate stamp-icon text-custom-primary/20"></i>
+                        
+                        <h3 class="font-tech text-2xl font-bold text-white border-b border-custom-primary/30 pb-3 mb-6 uppercase tracking-widest flex items-center gap-2">
+                            <i class="ph-bold ph-identification-card text-custom-primary"></i> Registration Details
+                        </h3>
+                        
+                        <div class="space-y-6 relative z-10">
+                            <div>
+                                <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Enterprise Name</div>
+                                <div class="text-lg text-white font-semibold">NULLGRIDS LABS</div>
+                            </div>
+                            
+                            <div>
+                                <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Registration Number</div>
+                                <div class="text-xl font-mono text-custom-gold font-bold text-glow-gold">UDYAM-TN-03-0328657</div>
+                            </div>
+                            
+                            <div>
+                                <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Registration Type</div>
+                                <div class="text-md text-white">Micro, Small and Medium Enterprise (MSME)</div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">State</div>
+                                    <div class="text-md text-white">Tamil Nadu</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">District</div>
+                                    <div class="text-md text-white">Coimbatore</div>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-4 border-t border-custom-primary/20">
+                                <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Founder</div>
+                                <div class="text-lg text-white font-semibold">Syed Raihaan</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column (About & What it means) -->
+                <div class="lg:col-span-3 space-y-10">
+                    
+                    <!-- About MSME -->
+                    <div>
+                        <h3 class="font-tech text-2xl font-bold text-white mb-4 uppercase tracking-widest">About MSME Registration</h3>
+                        <p class="text-custom-gray leading-relaxed mb-4 text-lg">
+                            <strong class="text-white">NULLGRIDS LABS</strong> is officially registered under the Ministry of Micro, Small and Medium Enterprises (MSME), Government of India.
+                        </p>
+                        <p class="text-custom-gray leading-relaxed text-lg">
+                            This registration establishes the organization as a recognized business entity and enables our participation in various government-supported entrepreneurial and technology innovation initiatives. It serves as a testament to our structural legitimacy and operational standard.
+                        </p>
+                    </div>
+
+                    <!-- What This Means -->
+                    <div>
+                        <h3 class="font-tech text-2xl font-bold text-white mb-6 uppercase tracking-widest border-b border-custom-primary/30 pb-3">What This Means</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="feature-card">
+                                <i class="ph-bold ph-building-office text-custom-primary text-xl mb-2"></i>
+                                <h4 class="text-white font-tech font-bold text-lg mb-1">Government Recognized Enterprise</h4>
+                            </div>
+                            <div class="feature-card">
+                                <i class="ph-bold ph-shield-check text-custom-primary text-xl mb-2"></i>
+                                <h4 class="text-white font-tech font-bold text-lg mb-1">Verified Business Identity</h4>
+                            </div>
+                            <div class="feature-card">
+                                <i class="ph-bold ph-scales text-custom-primary text-xl mb-2"></i>
+                                <h4 class="text-white font-tech font-bold text-lg mb-1">Operational Legitimacy</h4>
+                            </div>
+                            <div class="feature-card">
+                                <i class="ph-bold ph-briefcase text-custom-primary text-xl mb-2"></i>
+                                <h4 class="text-white font-tech font-bold text-lg mb-1">Professional Business Framework</h4>
+                            </div>
+                            <div class="feature-card">
+                                <i class="ph-bold ph-handshake text-custom-primary text-xl mb-2"></i>
+                                <h4 class="text-white font-tech font-bold text-lg mb-1">Capability to Build Industry Partnerships</h4>
+                            </div>
+                            <div class="feature-card">
+                                <i class="ph-bold ph-trend-up text-custom-primary text-xl mb-2"></i>
+                                <h4 class="text-white font-tech font-bold text-lg mb-1">Commitment to Growth and Innovation</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission Statement -->
+            <div class="glass-panel p-8 md:p-12 mb-16 relative overflow-hidden text-center bg-gradient-to-b from-custom-surface to-custom-bg">
+                <i class="ph-fill ph-quotes text-5xl absolute top-4 left-6 text-custom-primary/10"></i>
+                <h3 class="font-tech text-xl font-bold text-custom-primary mb-4 uppercase tracking-widest">Mission Statement</h3>
+                <p class="text-xl md:text-2xl text-white font-light leading-relaxed max-w-4xl mx-auto italic">
+                    "NULLGRIDS LABS focuses on cybersecurity education, practical training, technology innovation, research initiatives, and community development programs designed to create meaningful impact in the cybersecurity ecosystem."
+                </p>
+                <i class="ph-fill ph-quotes text-5xl absolute bottom-4 right-6 text-custom-primary/10 rotate-180"></i>
+            </div>
+
+            <!-- Verification Badge Area -->
+            <div class="flex flex-col md:flex-row items-center justify-between p-8 border border-custom-primary/30 rounded-xl bg-custom-primary/5 mb-16">
+                <div class="flex items-center gap-6 mb-6 md:mb-0">
+                    <div class="w-16 h-16 rounded-full bg-green-500/20 border-2 border-green-500 flex items-center justify-center text-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+                        <i class="ph-bold ph-check text-3xl"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-tech text-custom-gray uppercase tracking-widest mb-1">Official Status</div>
+                        <div class="text-2xl font-bold text-white flex items-center gap-2">
+                            ACTIVE <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-x-10 gap-y-4 text-left md:text-right">
+                    <div>
+                        <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Enterprise</div>
+                        <div class="text-md text-white font-semibold">NULLGRIDS LABS</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Registration Number</div>
+                        <div class="text-md font-mono text-custom-primaryGlow">UDYAM-TN-03-0328657</div>
+                    </div>
+                    <div>
+                        <div class="text-xs font-tech text-custom-gray uppercase tracking-widest mb-1">Founder</div>
+                        <div class="text-md text-white font-semibold">Syed Raihaan</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                <h3 class="text-2xl font-tech font-bold text-white mb-4">Interested in collaborating with NULLGRIDS LABS?</h3>
+                <p class="text-custom-gray mb-8 text-lg">Contact us through our official channels or explore our programs and initiatives.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="index.html#contact" class="px-8 py-4 bg-custom-primary text-white font-tech font-bold uppercase tracking-widest rounded hover:bg-blue-400 transition-colors flex items-center gap-2 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                        <i class="ph-bold ph-envelope-simple"></i> Contact Us
+                    </a>
+                    <a href="index.html#initiatives" class="px-8 py-4 border border-custom-primary/50 text-white font-tech font-bold uppercase tracking-widest rounded hover:bg-custom-primary/10 transition-colors flex items-center gap-2">
+                        <i class="ph-bold ph-rocket"></i> Explore Initiatives
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-custom-primary/20 bg-[#06070B] py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h4 class="font-tech text-2xl font-bold tracking-widest text-white mb-2">NULLGRIDS LABS</h4>
+            <p class="text-sm text-custom-gray italic mb-6">Where Protection and Knowledge Comes Together for Education</p>
+            
+            <div class="inline-flex items-center justify-center gap-2 px-4 py-1.5 border border-custom-primary/30 rounded text-xs font-tech text-custom-primaryGlow tracking-widest uppercase">
+                <i class="ph-fill ph-seal-check text-custom-gold"></i> MSME Registered Enterprise
+            </div>
+            
+            <div class="mt-8 flex justify-center gap-6 text-xs font-tech text-custom-gray uppercase tracking-widest">
+                <a href="privacy-policy.html" class="hover:text-custom-primary transition-colors">Privacy Policy</a>
+                <a href="terms-of-service.html" class="hover:text-custom-primary transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

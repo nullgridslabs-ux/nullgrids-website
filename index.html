@@ -284,6 +284,7 @@
                 <a href="#services" class="hover:text-custom-primary transition-colors uppercase">Services</a>
                 <a href="#faq" class="hover:text-custom-primary transition-colors uppercase">FAQ</a>
                 <a href="#sponsors" class="hover:text-custom-primary transition-colors uppercase">Sponsors</a>
+                <a href="ecosystem.html" target="_blank" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph ph-tree-structure text-custom-primary"></i> Map</a>
                 <a href="verify.html" class="hover:text-custom-primary transition-colors uppercase flex items-center gap-1"><i class="ph ph-shield-check text-custom-primary"></i> Verify ID</a>
                 <a href="apply.html" class="px-5 py-2 bg-custom-primary/10 border border-custom-primary text-custom-primary hover:bg-custom-primary hover:text-white transition-all uppercase shadow-[0_0_15px_rgba(168,85,247,0.2)] hover:shadow-[0_0_20px_rgba(168,85,247,0.5)]">Join Ecosystem</a>
             </div>
@@ -302,6 +303,7 @@
                 <a href="#services" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">Services</a>
                 <a href="#faq" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">FAQ</a>
                 <a href="#sponsors" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10">Sponsors</a>
+                <a href="ecosystem.html" target="_blank" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10 flex items-center gap-2"><i class="ph ph-tree-structure text-custom-primary"></i> Ecosystem Map</a>
                 <a href="verify.html" onclick="closeMobileMenu()" class="text-custom-gray hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10 flex items-center gap-2"><i class="ph ph-shield-check text-custom-primary"></i> Verify ID</a>
                 <a href="ctf_website/index.html" target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()" class="text-custom-primaryGlow hover:text-custom-primary transition-colors uppercase py-2 border-b border-custom-primary/10 flex items-center gap-2"><i class="ph ph-terminal-window"></i> CTF Platform</a>
                 <a href="apply.html" class="mt-2 px-5 py-3 bg-custom-primary text-white hover:bg-purple-400 transition-all uppercase text-center shadow-[0_0_15px_rgba(168,85,247,0.3)]">Join Ecosystem</a>
@@ -366,13 +368,16 @@
                     </div>
                 </div>
                 
-                <div class="relative reveal delay-200 h-[400px] border border-custom-primary/30 glass-panel flex items-center justify-center overflow-hidden group shadow-[0_0_30px_rgba(168,85,247,0.1)]">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity mix-blend-luminosity filter hue-rotate-270 saturate-200"></div>
-                    <div class="relative z-10 text-center">
-                        <i class="ph-thin ph-graph text-7xl text-custom-primary mb-4 opacity-80"></i>
-                        <p class="font-tech tracking-widest text-custom-primaryGlow text-sm">ECOSYSTEM VISUALIZATION</p>
+                <a href="ecosystem.html" target="_blank" class="relative reveal delay-200 h-[400px] border border-custom-primary/30 glass-panel flex items-center justify-center overflow-hidden group shadow-[0_0_30px_rgba(168,85,247,0.1)] hover:border-custom-primary hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] transition-all cursor-pointer block">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center opacity-10 group-hover:opacity-20 group-hover:scale-105 transition-all duration-500 mix-blend-luminosity filter hue-rotate-270 saturate-200"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-custom-bg via-transparent to-transparent opacity-80"></div>
+                    <div class="relative z-10 text-center flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-full bg-custom-primary/20 flex items-center justify-center mb-4 border border-custom-primary/30 group-hover:scale-110 transition-transform">
+                            <i class="ph-bold ph-tree-structure text-3xl text-custom-primary group-hover:text-white transition-colors"></i>
+                        </div>
+                        <p class="font-tech tracking-widest text-custom-primaryGlow text-sm font-bold bg-black/50 px-4 py-2 rounded border border-custom-primary/20">ECOSYSTEM VISUALIZATION</p>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
@@ -1136,11 +1141,12 @@
                 </div>
 
                 <div class="glass-panel p-8 cyber-border reveal delay-100 bg-custom-surface">
-                    <form action="https://formsubmit.co/nullgridslabs@gmail.com" method="POST" class="space-y-6">
+                    <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                        <!-- Web3Forms Access Key -->
+                        <input type="hidden" name="access_key" value="2831eafc-5c26-4c58-81f5-2b30ecb71e08">
+                        
                         <!-- Redirect back to the site after submission -->
-                        <input type="hidden" name="_next" value="https://nullgridslabs.dpdns.org">
-                        <!-- Disable Captcha (optional, but cleaner UX) -->
-                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="redirect" value="https://nullgridslabs.dpdns.org">
 
                         <div class="text-xs font-tech text-custom-primary tracking-widest border-b border-custom-primary/30 pb-2 mb-6 text-glow">
                             SECURE TRANSMISSION PROTOCOL
@@ -1159,7 +1165,7 @@
                         
                         <div>
                             <label class="block text-xs font-tech text-custom-gray uppercase tracking-widest mb-2">Transmission Subject</label>
-                            <select name="_subject" class="w-full bg-custom-bg border border-custom-primary/30 text-custom-gray px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm appearance-none">
+                            <select name="subject" class="w-full bg-custom-bg border border-custom-primary/30 text-custom-gray px-4 py-3 focus:outline-none focus:border-custom-primary focus:shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-all font-mono text-sm appearance-none">
                                 <option>General Inquiry</option>
                                 <option>Join as Contributor</option>
                                 <option>Institutional Partnership</option>
@@ -1190,7 +1196,10 @@
                         <i class="ph-fill ph-shield-check text-custom-primary text-2xl text-glow"></i>
                         <span class="font-tech text-3xl font-bold tracking-widest text-white">NULLGRIDS</span>
                     </div>
-                    <div class="text-sm font-tech text-custom-gray uppercase tracking-widest">Student-led Cybersecurity Initiative</div>
+                    <div class="text-sm font-tech text-custom-gray uppercase tracking-widest mb-3">Student-led Cybersecurity Initiative</div>
+                    <a href="msme-registration.html" class="inline-flex items-center gap-2 px-3 py-1.5 border border-yellow-500/30 bg-yellow-500/10 text-yellow-500 text-[10px] font-tech tracking-widest uppercase rounded hover:bg-yellow-500/20 transition-colors shadow-[0_0_10px_rgba(234,179,8,0.2)]">
+                        <i class="ph-fill ph-seal-check text-sm"></i> MSME Registered
+                    </a>
                 </div>
                 
                 <div class="flex gap-4">
