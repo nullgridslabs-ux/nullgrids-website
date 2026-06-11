@@ -391,7 +391,7 @@
             <div id="form-container">
                 <div class="form-group">
                     <label for="empId">Employee ID</label>
-                    <input type="text" id="empId" class="form-control" placeholder="e.g. NGL-FND-001" autocomplete="off">
+                    <input type="text" id="empId" class="form-control" placeholder="EMP-XXXXXX" autocomplete="off">
                 </div>
 
                 <div class="form-group">
@@ -414,124 +414,9 @@
     </div>
 
     <script>
-        // Employee Database
-        const employees = {
-            "NGL-FND-001": {
-                name: "Syed Raihaan",
-                designation: "Founder & Proprietor / CTO",
-                department: "Founder Office",
-                issueDate: "Dec-2025"
-            },
-            "NGL-CORE-002": {
-                name: "Harisakthi",
-                designation: "CEO",
-                department: "Executive Board",
-                issueDate: "Dec-2025"
-            },
-            "NGL-CORE-003": {
-                name: "Sheik Nifla",
-                designation: "CDCO",
-                department: "Executive Board",
-                issueDate: "Feb-2026"
-            },
-            "NGL-CORE-004": {
-                name: "Santha Kumar",
-                designation: "CMA",
-                department: "Executive Board",
-                issueDate: "Dec-2025"
-            },
-            "NGL-CORE-005": {
-                name: "Tamilselvan",
-                designation: "CFO",
-                department: "Finance Team",
-                issueDate: "Feb-2026"
-            },
-            "NGL-TECH-001": {
-                name: "Arumugapandi",
-                designation: "Technical Lead",
-                department: "Technical Team",
-                issueDate: "15-Dec-2025"
-            },
-            "NGL-MKT-001": {
-                name: "Priyan",
-                designation: "Digital Marketing Associate",
-                department: "Marketing Team",
-                issueDate: "15-Dec-2025"
-            },
-            "NGL-SPN-001": {
-                name: "Pradeesh",
-                designation: "Sponsor & Partner Relations Manager",
-                department: "Sponsorship Team",
-                issueDate: "Mar-2026"
-            },
-            "NGL-MKT-002": {
-                name: "Sashvini",
-                designation: "Digital Media Associate",
-                department: "Marketing Team",
-                issueDate: "14-Mar-2026"
-            },
-            "NGL-APP-1746": { name: "Dinesh Kannan", designation: "Applicant", department: "Research Team", issueDate: "N/A" },
-            "NGL-APP-3315": { name: "Sathiya Seelan", designation: "Applicant", department: "Operations Team", issueDate: "N/A" },
-            "NGL-APP-2955": { name: "Swetha", designation: "Applicant", department: "Testing Team", issueDate: "N/A" },
-            "NGL-APP-7481": { name: "Karthikeyan", designation: "Applicant", department: "Technical Team", issueDate: "N/A" },
-            "NGL-APP-7482": { name: "Abdul Basith", designation: "Applicant", department: "Marketing and Outreach", issueDate: "N/A" },
-            "NGL-APP-7484": { name: "Ishani", designation: "Applicant", department: "Technical Team", issueDate: "N/A" },
-            "NGL-APP-7485": { name: "Kiruthick", designation: "Applicant", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-APP-7486": { name: "Karthick", designation: "Applicant", department: "Operational & Volunteering Intern", issueDate: "N/A" },
-            "NGL-APP-7488": { name: "Karthi keyan K", designation: "Applicant", department: "Research Team", issueDate: "N/A" },
-            "NGL-APP-7489": { name: "Rithik Anand", designation: "Applicant", department: "Operations Team", issueDate: "N/A" },
-            "NGL-APP-7490": { name: "Dhivakar", designation: "Applicant", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-APP-7491": { name: "Thouheeth", designation: "Applicant", department: "Volunteering Team", issueDate: "N/A" },
-            "NGL-APP-7494": { name: "Rithika", designation: "Applicant", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-APP-7495": { name: "Sathiya", designation: "Applicant", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-APP-7496": { name: "Yogeshwara", designation: "Applicant", department: "Finance Team", issueDate: "N/A" },
-            "NGL-APP-7498": { name: "Tharun", designation: "Applicant", department: "Sponsorship Management", issueDate: "N/A" },
-            "NGL-APP-7499": { name: "Pradeep", designation: "Applicant", department: "Outreach Team", issueDate: "N/A" },
-            "NGL-APP-7500": { name: "Kavin Raja", designation: "Applicant", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-001": { name: "Dinesh Kannan", designation: "Intern", department: "Research Team", issueDate: "N/A" },
-            "NGL-INT-002": { name: "Sathiya Seelan", designation: "Intern", department: "Operations Team", issueDate: "N/A" },
-            "NGL-INT-003": { name: "Swetha", designation: "Intern", department: "Testing Team", issueDate: "N/A" },
-            "NGL-INT-004": { name: "Hirithish", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-005": { name: "Karthikeyan", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-006": { name: "Kavin", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-007": { name: "Ramya", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-008": { name: "Karthikeyan", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-009": { name: "Poorna Devi", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-010": { name: "Keerthika", designation: "Intern", department: "Testing Team", issueDate: "N/A" },
-            "NGL-INT-011": { name: "Lavanya", designation: "Intern", department: "Testing Team", issueDate: "N/A" },
-            "NGL-INT-012": { name: "Mohammad Aedil", designation: "Intern", department: "Testing Team", issueDate: "N/A" },
-            "NGL-INT-013": { name: "Kiruba sree", designation: "Intern", department: "Registration Team", issueDate: "N/A" },
-            "NGL-INT-014": { name: "Abi Sankari", designation: "Intern", department: "Registration Team", issueDate: "N/A" },
-            "NGL-INT-015": { name: "Jenisha", designation: "Intern", department: "Registration Team", issueDate: "N/A" },
-            "NGL-INT-016": { name: "Suja", designation: "Intern", department: "Registration Team", issueDate: "N/A" },
-            "NGL-INT-017": { name: "Barath", designation: "Intern", department: "Sponsorship Team", issueDate: "N/A" },
-            "NGL-INT-018": { name: "Yogeshwaran", designation: "Intern", department: "Financial Team", issueDate: "N/A" },
-            "NGL-INT-019": { name: "Yogeshwara", designation: "Intern", department: "revked", issueDate: "N/A" },
-            "NGL-INT-020": { name: "Arun Kumar", designation: "Intern", department: "Outreach Team", issueDate: "N/A" },
-            "NGL-INT-021": { name: "Mithun", designation: "Intern", department: "Outreach Team", issueDate: "N/A" },
-            "NGL-INT-022": { name: "Mithun Kumar", designation: "Intern", department: "Outreach Team", issueDate: "N/A" },
-            "NGL-INT-023": { name: "Sunil Kumar", designation: "Intern", department: "Outreach Team", issueDate: "N/A" },
-            "NGL-INT-024": { name: "Tamil", designation: "Intern", department: "Outreach Team", issueDate: "N/A" },
-            "NGL-INT-025": { name: "Kishore", designation: "Intern", department: "Design and Media Team", issueDate: "N/A" },
-            "NGL-INT-026": { name: "Nirmala", designation: "Intern", department: "Design and Media Team", issueDate: "N/A" },
-            "NGL-INT-027": { name: "Praveen kumar", designation: "Intern", department: "Design and Media Team", issueDate: "N/A" },
-            "NGL-INT-028": { name: "Divya Dharshini", designation: "Intern", department: "Design and Media Team", issueDate: "N/A" },
-            "NGL-INT-029": { name: "Abdul Basith", designation: "Intern", department: "Marketing and Outreach", issueDate: "N/A" },
-            "NGL-INT-030": { name: "Ishani", designation: "Intern", department: "Technical Team", issueDate: "N/A" },
-            "NGL-INT-031": { name: "Kiruthick", designation: "Intern", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-INT-032": { name: "karthick", designation: "Intern", department: "Operational & Volunteering Intern", issueDate: "N/A" },
-            "NGL-INT-033": { name: "karthi keyan K", designation: "Intern", department: "Research Team", issueDate: "N/A" },
-            "NGL-INT-034": { name: "rithik anand", designation: "Intern", department: "Operations Team", issueDate: "N/A" },
-            "NGL-INT-035": { name: "Dhivakar", designation: "Intern", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-INT-036": { name: "thouheeth", designation: "Intern", department: "Volunteering Team", issueDate: "N/A" },
-            "NGL-INT-037": { name: "rithika", designation: "Intern", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-INT-038": { name: "Sathiya", designation: "Intern", department: "Documentation and Compliance Team", issueDate: "N/A" },
-            "NGL-INT-039": { name: "yogeshwara", designation: "Intern", department: "Financial Team", issueDate: "N/A" },
-            "NGL-INT-040": { name: "tharun", designation: "Intern", department: "Sponsorship Management", issueDate: "N/A" }
-        };
-
         function verifyIdentity() {
             const empIdInput = document.getElementById('empId').value.trim().toUpperCase();
+            const verCodeInput = document.getElementById('verCode').value.trim();
             const formContainer = document.getElementById('form-container');
             const resultContainer = document.getElementById('result-container');
             const loadingSpinner = document.getElementById('loading-spinner');
@@ -548,21 +433,42 @@
             loadingSpinner.style.display = 'block';
             resultContainer.style.display = 'none';
 
-            // Simulate network/decryption delay for cool effect
-            setTimeout(() => {
+            // Send request to backend API for verification
+            fetch('/api/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    empId: empIdInput,
+                    verCode: verCodeInput
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
                 loadingSpinner.style.display = 'none';
                 scanLine.style.display = 'none';
                 
-                const employee = employees[empIdInput];
-
-                if (employee) {
-                    showSuccess(empIdInput, employee);
+                if (data.success && data.employee) {
+                    showSuccess(empIdInput, data.employee);
                 } else {
                     showError();
                 }
                 
                 resultContainer.style.display = 'block';
-            }, 1200);
+            })
+            .catch(error => {
+                loadingSpinner.style.display = 'none';
+                scanLine.style.display = 'none';
+                showError();
+                resultContainer.style.display = 'block';
+                console.error('Error during verification:', error);
+            });
         }
 
         function showSuccess(id, data) {
