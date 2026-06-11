@@ -414,6 +414,14 @@
     </div>
 
     <script>
+        const employeeDatabase = {
+            "NGL-FND-001": { name: "Syed Raihaan", designation: "Founder & Proprietor / CTO", department: "Founder Office", issueDate: "Dec-25" },
+            "NGL-CORE-001": { name: "Harisakthi", designation: "CEO", department: "Executive Board", issueDate: "Dec-25" },
+            "NGL-CORE-002": { name: "Sheik Nifla", designation: "CDCO", department: "Executive Board", issueDate: "Feb-26" },
+            "NGL-CORE-003": { name: "Santha Kumar", designation: "CMA", department: "Executive Board", issueDate: "Dec-25" },
+            "NGL-CORE-004": { name: "Tamilselvan", designation: "CFO", department: "Finance Team", issueDate: "Feb-26" }
+        };
+
         function verifyIdentity() {
             const empIdInput = document.getElementById('empId').value.trim().toUpperCase();
             const verCodeInput = document.getElementById('verCode').value.trim();
@@ -433,42 +441,19 @@
             loadingSpinner.style.display = 'block';
             resultContainer.style.display = 'none';
 
-            // Send request to backend API for verification
-            fetch('/api/verify', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    empId: empIdInput,
-                    verCode: verCodeInput
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
+            // Simulate verification delay
+            setTimeout(() => {
                 loadingSpinner.style.display = 'none';
                 scanLine.style.display = 'none';
                 
-                if (data.success && data.employee) {
-                    showSuccess(empIdInput, data.employee);
+                if (employeeDatabase[empIdInput]) {
+                    showSuccess(empIdInput, employeeDatabase[empIdInput]);
                 } else {
                     showError();
                 }
                 
                 resultContainer.style.display = 'block';
-            })
-            .catch(error => {
-                loadingSpinner.style.display = 'none';
-                scanLine.style.display = 'none';
-                showError();
-                resultContainer.style.display = 'block';
-                console.error('Error during verification:', error);
-            });
+            }, 1500);
         }
 
         function showSuccess(id, data) {
